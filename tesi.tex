@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper,twoside,openright]{report}
+\documentclass[12pt,a4paper,oneside]{report}
 
 % --- 1. Lingua, codifica e font -----------------------------------------------
 \usepackage[T1]{fontenc}
@@ -28,6 +28,7 @@
 \usepackage{subcaption} % Per \begin{subfigure} (Cap. 4)
 \usepackage{xcolor}
 \usepackage{tikz}       % Per i diagrammi CRISP-DM (Cap. 1)
+\usepackage[section]{placeins}
 
 \usetikzlibrary{arrows.meta}
 \usetikzlibrary{positioning}
@@ -65,8 +66,11 @@
 % =============================================================================
 % CAPITOLO 1
 % =============================================================================
+% =============================================================================
+% CAPITOLO 1
+% =============================================================================
 
-\chapter{Introduzione e quadro metodologico}
+\chapter{Introduzione}
 
 \section{Contesto e motivazione}
 \label{sec:contesto}
@@ -95,21 +99,19 @@ Il lavoro persegue tre macro-obiettivi:
 \begin{enumerate}
 \item \textbf{Costruire una pipeline riproducibile} che trasformi il testo del regolamento, così come pubblicato su EUR-Lex, in un dataset strutturato di proposizioni normative, ciascuna classificata per tipo di obbligo, livello di rischio e soggetto obbligato, arricchita con entità di dominio (attori, autorità, riferimenti normativi) estratte automaticamente.
 
-\item \textbf{Validare l'accuratezza di questi classificatori automatici}. Il classificatore delle proposizioni ed il sistema di riconoscimento delle entità vengono valutati su campioni annotati manualmente. Ogni stima è calcolata su proposizioni mai usate per mettere a punto il sistema, annotate senza vederne le predizioni (\textit{blind annotation}).
+\item \textbf{Validare l'accuratezza dei classificatori automatici}: la valutazione riguarda sia il \textbf{classificatore deterministico delle proposizioni} (per modalità deontica e livello di rischio), scelto per aderire in modo ispezionabile alle formule legistiche codificate dell'UE in assenza di dataset pre-annotati sull'AI Act, sia i \textbf{modelli di riconoscimento delle entità (NER)}. Per questi ultimi sono stati selezionati e posti a confronto tre paradigmi: una baseline statistica generalista (\emph{spaCy}), scelta come controllo negativo fuori dominio; un sistema simbolico a regole (\emph{gazetteer} ed espressioni regolari), scelto per sfruttare il vocabolario chiuso dei ruoli definiti dall'Articolo~3; e modelli neurali Transformer pre-addestrati su corpora giuridici (\emph{Italian-Legal-BERT}, \emph{LEGAL-BERT} e \emph{JuriBERT}), scelti per verificare se la rappresentazione contestuale del linguaggio legale consenta di superare i limiti sintattici delle regole in un regime di scarsità di dati annotati (\emph{weak} e \emph{strong supervision}). Tutti i moduli vengono valutati su campioni annotati manualmente: ogni stima è calcolata su proposizioni mai usate per mettere a punto il sistema, annotate alla cieca senza vederne le predizioni (\emph{blind annotation}).
 
 \item \textbf{Verificare cosa rivelano della struttura di un atto normativo tecniche diverse} (Topic Modeling, Topological Data Analysis, Formal Concept Analysis) e se questa struttura permetta di ricavare, dal basso ed in modo riproducibile, una ipotesi di architettura software per la conformità.
 \end{enumerate}
 
 
-\subsection{Domande di ricerca}
+\section{Domande di ricerca}
 \label{sec:domande}
 \begin{itemize}
     \item \textbf{$\mathcal{D}_1$ --- Regole o modello neurale?}
     Il riconoscimento delle entità è stato realizzato in due modi: con regole simboliche basate su espressioni regolari e gazetteer, e con Italian-Legal-BERT, un modello linguistico specializzato sul diritto italiano addestrato con supervisione debole. La domanda è se il deep learning superi le regole o se ne erediti i limiti sistematici.
-    \item \textbf{$\mathcal{D}_2$ --- Perché l'Art.~10 sfugge e come recuperare l'attore?}
-    Le proposizioni sulla governance dei dati (Art.~10) non entravano inizialmente nel catalogo dei componenti, poiché prive di un attore sintattico esplicito. La domanda è quali caratteristiche del testo spieghino questo fenomeno (l'impersonalità della Sezione 2 del Capo III) e come sanarlo mediante regole di eredità contestuale.
-    \item \textbf{$\mathcal{D}_3$ --- Definizione dei cluster e stabilità architetturale.}
-    Il catalogo dei 9 componenti nasce dall'aggregazione di cluster bivariati attore $\times$ tema (16 sopra-soglia in italiano a $k=10$, 18 in inglese e francese). La domanda è come si definiscono formalmente questi gruppi, come vengono aggregati e quanto risultano stabili al variare dei parametri ($k$) e della lingua.
+    \item \textbf{$\mathcal{D}_2$--- Quali regole possono essere recuperate dal testo e costruite in un modello concettuale?} Nel dettato normativo, diverse prescrizioni tecniche risultano prive di un attore sintattico esplicito all'interno della singola frase, poiché demandano l'individuazione del soggetto responsabile alla struttura gerarchica dell'atto. La domanda è quali regole formali di inferenza e di eredità contestuale possano essere estratte dal testo e integrate nel modello concettuale (\emph{Formal Concept Analysis}) per recuperare tali legami impliciti --- consentendo di ricondurre nel catalogo anche disposizioni centrali altrimenti escluse, come la governance dei dati (Art.~10) --- e come validarne la tenuta rispetto a generalizzazioni spurie.
+    \item \textbf{$\mathcal{D}_3$ --- Quale architettura software impone la regolamentazione (se ne esiste una)?} Non è scontato a priori che un testo legislativo contenga una struttura modulare traducibile in componenti software, né che i raggruppamenti estratti riflettano una proprietà intrinseca della norma anziché un artefatto algoritmico. La domanda è se dall'aggregazione di cluster bivariati $\text{attore} \times \text{tema}$ emerga un'architettura di conformità ben definita, come si formalizzino tali gruppi e quanto i componenti risultanti siano stabili al variare dei parametri ($k$, soglia di supporto), del modello di estrazione e della lingua (italiano, inglese e francese).
 \end{itemize}
 
 \section{Contributo scientifico e applicativo}
@@ -117,11 +119,15 @@ Il lavoro persegue tre macro-obiettivi:
 Le tecniche impiegate nella tesi si fondano su letterature consolidate. Il lavoro ne propone un impiego congiunto sul medesimo testo normativo, articolando il contributo su due piani:
 
 \begin{itemize}
+    \item \textbf{Pipeline e dataset}. La realizzazione di una pipeline \emph{end-to-end} riproducibile che trasforma il testo grezzo dell'AI Act in un dataset strutturato di proposizioni normative (1.175 totali, di cui 1.172 prescrittive in italiano, replicato sulle versioni inglese e francese), arricchito con coordinate strutturali, tipo di obbligo, livello di rischio, entità astratte(attori, autorità, rinvii), profilo tematico NMF, contesto formale binario e campioni \emph{gold} annotati manualmente alla cieca.
+    
     \item \textbf{Metodologia}. Il risultato principale riguarda il confronto tra regex e modello neurale. Il modello, addestrato sulle etichette prodotte dalle regex (\textit{silver labels}), ne eredita gli errori sistematici: il suo vantaggio iniziale dipendeva da bug delle regole e, una volta corretti, i due sistemi convergono alla parità statistica ($0{,}924$ contro $0{,}919$ sul round cieco, $p = 1{,}00$, e $0{,}954$ contro $0{,}953$ pooled). Un modello addestrato solo su supervisione debole non può superare il proprio supervisore simbolico.
     La tesi documenta inoltre i rischi metodologici della valutazione: il classificatore del tipo di obbligo raggiunge il $67{,}6\%$ di accuratezza ($89{,}2\%$ sul rischio) su un campione di test indipendente; per il NER, la separazione netta tra annotatore e predizioni ha eliminato i bias di ancoraggio.
     
     \item \textbf{Applicativo}. Un catalogo di 9 componenti software derivato dal testo dell'AI Act, organizzato per stadio del ciclo di vita di un sistema di IA e tracciabile fino agli articoli. I componenti restano stabili al variare dei parametri, anche se il numero di cluster intermedi varia ($\mathcal{D}_3$). Il punto cieco principale del catalogo, la data governance, è stato risolto comprendendo il regime impersonale della Sezione 2 del Capo III: l'Art.~16 assegna infatti la responsabilità al fornitore. Una regola di eredità recupera 54 proposizioni della sezione (di cui 27 dell'Art.~10), con una precisione del $96{,}3\%$ (52 su 54 corrette) verificata manualmente a cieco.
 \end{itemize}
+
+
 
 \section{Perimetro del lavoro ed esclusioni}
 La tesi analizza un solo atto, il Regolamento (UE) 2024/1689, nel testo consolidato pubblicato nella Gazzetta Ufficiale del 12 luglio 2024, scaricato da EUR-Lex e mantenuto congelato. Aggiornamenti successivi del testo non sono considerati. La lingua principale è l'italiano; inglese e francese sono utilizzati per il controllo incrociato comparativo.\\[0.5cm]
@@ -139,11 +145,23 @@ La tesi analizza un solo atto, il Regolamento (UE) 2024/1689, nel testo consolid
     \item \textbf{I modelli generativi per l'estrazione primaria}. Il confronto empirico è focalizzato tra regole formali e modelli discriminativi di dominio (Legal-BERT); i Large Language Models sono trattati nello stato dell'arte e nelle prospettive future.
 \end{itemize}
 
+\newpage
+
+\begin{figure} [!t]
+    \centering
+    \includegraphics[width=0.8\linewidth]{venn_perimetro.png}
+    \caption[Diagramma di Venn del perimetro della tesi]{Rappresentazione insiemistica del perimetro del lavoro: le regioni esterne tratteggiate individuano le esclusioni esplicite, le intersezioni intermedie gli elementi analitici inclusi e il nucleo centrale il contributo complessivo della tesi.}
+    \label{fig:venn_perimetro}
+\end{figure}
+
+La Figura \ref{fig:venn_perimetro} riassume visivamente il confine all'intersezione tra dominio normativo, \emph{Legal NLP} e ingegneria del software. Le regioni esterne tratteggiate isolano gli elementi esclusi (fonti secondarie, paratesto e interpretazione dottrinale; modelli generativi; sviluppo di codice applicativo), mentre le intersezioni intermedie raccordano il testo prescrittivo, i modelli di estrazione e l'astrazione formale che definisce il perimetro della tesi: la pipeline \emph{end-to-end}, il catalogo dei 9 componenti architetturali.
+ 
+
 \section{Quadro metodologico: la pipeline come processo CRISP-DM}
 \subsection{Perché CRISP-DM}
 CRISP-DM (\textit{Cross-Industry Standard Process for Data Mining}; Chapman et al., 2000; Wirth e Hipp, 2000) descrive un progetto di analisi dei dati in sei fasi: comprensione del problema, comprensione dei dati, preparazione dei dati, modellazione, valutazione e messa in uso. Le fasi non sono strettamente sequenziali: il modello prevede ritorni espliciti alle fasi precedenti quando la valutazione mostra un problema.
 
-È una cornice adatta a questo lavoro non per analogia, ma perché quei ritorni sono avvenuti davvero, cinque volte (\cref{tab:dettaglio_iterazioni}). In ognuno, un'anomalia emersa valutando i risultati ha richiesto di correggere una fase a monte, e la correzione è stata poi verificata su dati non utilizzati per ricavarla.
+È una cornice adatta a questo lavoro non per analogia, ma perché quei ritorni sono avvenuti davvero, cinque volte ((Tabella~\ref{tab:dettaglio_iterazioni}). In ognuno, un'anomalia emersa valutando i risultati ha richiesto di correggere una fase a monte, e la correzione è stata poi verificata su dati non utilizzati per ricavarla.
 
 \subsection{Le sei fasi applicate alla pipeline}
 
@@ -249,17 +267,17 @@ CRISP-DM (\textit{Cross-Industry Standard Process for Data Mining}; Chapman et a
 \label{fig:pipeline_crisp_dm}
 \end{figure}
 
-\subsection*{Comprensione del problema (Business Understanding)}
+\subparagraph{Comprensione del problema (Business Understanding)}
 L'obiettivo è quello di rendere interrogabile un testo normativo lungo e stratificato, a supporto di una analisi di conformità ad oggi in parte manuale. Due criteri hanno guidato il lavoro:
 \begin{itemize}
     \item le prestazioni dei componenti automatici devono essere stimate su dati mai usati per metterli a punto;
     \item il catalogo finale deve restare tracciabile fino alle singole proposizioni e agli articoli da cui deriva.
 \end{itemize}
 
-\subsection*{Comprensione dei dati (Data Understanding)}
+\subparagraph{Comprensione dei dati (Data Understanding)}
 Il testo del Regolamento è stato scaricato da EUR-Lex e suddiviso nei singoli commi e punti elenco: 1.353 record (1.456 nella segmentazione iniziale). Una prima classificazione automatica mostra una peculiarità linguistica: l'italiano giuridico esprime l'obbligo soprattutto al presente indicativo (\textit{«il fornitore compila...»}) anziché con formule deontiche canoniche (\textit{«deve»}). La classe «obbligo positivo» è pertanto soggetta a forte dispersione sintattica.
 
-\subsection*{Preparazione dei dati (Data Preparation)}
+\subparagraph{Preparazione dei dati (Data Preparation)}
 \begin{itemize}
     \item \textbf{Segmentazione} dei paragrafi in proposizioni normative: 1.775 complessive, di cui 1.172 aventi valore normativo primario.
     \item \textbf{Classificazione} di ciascuna proposizione per tipo di obbligo e livello di rischio esplicito.
@@ -267,7 +285,7 @@ Il testo del Regolamento è stato scaricato da EUR-Lex e suddiviso nei singoli c
     \item \textbf{Costruzione del contesto formale}: una matrice binaria di 1.171 proposizioni $\times$ 70 attributi che associa ad ogni proposizione le sue proprietà, passaggio chiave verso la modellazione formale.
 \end{itemize}
 
-\subsection*{Modellazione (Modeling)}
+\subparagraph{Modellazione (Modeling)}
 \begin{itemize}
     \item \textbf{Topic modeling} con NMF: estrazione di 10 temi latenti ($k=10$).
     \item Sull'output di NMF operano tre tecniche:
@@ -278,7 +296,7 @@ Il testo del Regolamento è stato scaricato da EUR-Lex e suddiviso nei singoli c
     \end{itemize}
 \end{itemize}
 
-\subsection*{Valutazione (Evaluation)}
+\subparagraph{Valutazione (Evaluation)}
 La fase metodologicamente cardine. Ogni componente è valutato su campioni indipendenti annotati a mano, documentando il superamento delle distorsioni iniziali.
 
 \begin{table}[htbp]
@@ -298,7 +316,7 @@ La fase metodologicamente cardine. Ogni componente è valutato su campioni indip
     \end{tabular}
 \end{table}
 
-\subsection*{Messa in uso (Deployment)}
+\subparagraph{Messa in uso (Deployment)}
 I cluster bivariati attore $\times$ tema (16 in italiano, 18 in inglese e francese) sono aggregati nel catalogo di 9 componenti software, disposti lungo le 4 fasi del ciclo di vita dell'IA. Come precisato al \ref{sec:contributo}, è la proposta formale di un'architettura software di conformità, non un sistema operativo realizzato.
 
 \begin{figure}[htbp]
@@ -373,7 +391,7 @@ I cluster bivariati attore $\times$ tema (16 in italiano, 18 in inglese e france
         \bottomrule
     \end{tabular}
     \caption{Dettaglio dei problemi emersi e relative correzioni per ciascuna iterazione CRISP-DM}
-    \label{tab:dettaglio_iterazioni} % <-- CORRETTO: rimosso il backslash prima di _
+    \label{tab:dettaglio_iterazioni}
 \end{table}
 
 \clearpage
@@ -404,9 +422,6 @@ Per offrire una trattazione compatta, rigorosa e priva di ridondanze, l'opera è
         \item \textbf{Conclusioni e sviluppi futuri:} sintesi dei contributi dell'opera, limiti metodologici ed evoluzione verso architetture basate su Large Language Models giuridici per l'interrogazione dinamica e l'adattamento ai futuri standard dell'AI Office.
     \end{itemize}
 \end{itemize}
-
-\clearpage
-
 % =============================================================================
 % CAPITOLO 2
 % =============================================================================

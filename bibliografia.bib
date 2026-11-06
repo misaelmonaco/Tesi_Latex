@@ -1,0 +1,598 @@
+% =============================================================================
+% Bibliografia della tesi
+% =============================================================================
+% File in UTF-8, compatibile con biblatex + biber (consigliato: gestisce accenti e
+% caratteri non ASCII senza codici TeX) e con BibTeX classico.
+%
+% Ogni voce e' preceduta da un commento "Verificato:" con la fonte primaria su cui sono
+% stati controllati autori, titolo e sede (registro DOI Crossref, arXiv, ACL Anthology,
+% PMLR, pagina ufficiale), il 24/09/2026. Dove il capitolo sullo stato dell'arte riporta
+% un'informazione diversa, il commento "Capitolo 3:" indica la correzione.
+% "Parziale" segnala le voci in cui un dettaglio non e' stato confermato sulla fonte
+% primaria: da controllare a mano prima della consegna.
+%
+% Sezioni:
+%   1. Letteratura citata nello stato dell'arte (Capitolo 3)
+%   2. Metodi usati nella pipeline
+%   3. Letteratura per l'interpretazione "maestro e allievo" (proposta, da valutare)
+%   4. Fonti normative, modelli pre-addestrati e software
+% =============================================================================
+
+% =============================================================================
+% 1. LETTERATURA CITATA NELLO STATO DELL'ARTE
+% =============================================================================
+
+% --- 1.1 Classificazione automatica di proposizioni normative -----------------
+
+% Verificato: arXiv 2505.00479. Preprint, nessuna sede di pubblicazione indicata.
+@misc{brandsma2025regulatory,
+  author        = {Brandsma, Gijs Jan and Blom-Hansen, Jens and Meijer, Christiaan and Moodley, Kody},
+  title         = {Computational Identification of Regulatory Statements in {EU} Legislation},
+  year          = {2025},
+  eprint        = {2505.00479},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  doi           = {10.48550/arXiv.2505.00479},
+}
+
+% Verificato: ACL Anthology.
+% Capitolo 3: citato come "un workshop NLLP 2023", senza autori.
+@inproceedings{minkova2023deontic,
+  author    = {Minkova, Kristina and Chakravarthy, Shashank M. and van Dijck, Gijs},
+  title     = {Low-Resource Deontic Modality Classification in {EU} Legislation},
+  booktitle = {Proceedings of the Natural Legal Language Processing Workshop 2023},
+  year      = {2023},
+  month     = dec,
+  pages     = {149--158},
+  address   = {Singapore},
+  publisher = {Association for Computational Linguistics},
+  doi       = {10.18653/v1/2023.nllp-1.15},
+  url       = {https://aclanthology.org/2023.nllp-1.15/},
+}
+
+% Verificato: arXiv 2606.02971. Preprint.
+% Capitolo 3: citato come "EURO-5K (2026)", senza autori.
+@misc{koniaris2026euro5k,
+  author        = {Koniaris, Marios and Kotronis, Vasileios and Giannini, Eugenia and Tsanakas, Panayiotis},
+  title         = {{EURO-5K}: When Does Domain Pretraining Matter? Benchmarking Transformers for {EU} Reporting Obligation Extraction},
+  year          = {2026},
+  eprint        = {2606.02971},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  doi           = {10.48550/arXiv.2606.02971},
+}
+
+% Verificato: arXiv 2603.09435. Preprint; dataset su GitHub (davidath/ai-act-evaluation-benchmark).
+% Capitolo 3: citato come "AI Act Evaluation Benchmark (2025-2026)", senza autori.
+@misc{davvetas2026aiact,
+  author        = {Davvetas, Athanasios and Papademas, Michael and Ziouvelou, Xenia and Karkaletsis, Vangelis},
+  title         = {{AI} {Act} Evaluation Benchmark: An Open, Transparent, and Reproducible Evaluation Dataset for {NLP} and {RAG} Systems},
+  year          = {2026},
+  eprint        = {2603.09435},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI},
+  doi           = {10.48550/arXiv.2603.09435},
+}
+
+% --- 1.2 Named Entity Recognition su testo giuridico ---------------------------
+
+% Verificato: Crossref (DOI). Numero di volume LNCS non riportato dal registro.
+@inproceedings{pozzi2023nerl,
+  author    = {Pozzi, Riccardo and Rubini, Riccardo and Bernasconi, Christian and Palmonari, Matteo},
+  title     = {Named Entity Recognition and Linking for Entity Extraction from {Italian} Civil Judgements},
+  booktitle = {{AIxIA} 2023 -- Advances in Artificial Intelligence},
+  series    = {Lecture Notes in Computer Science},
+  pages     = {187--201},
+  publisher = {Springer Nature Switzerland},
+  year      = {2023},
+  doi       = {10.1007/978-3-031-47546-7_13},
+}
+
+% Verificato: CEUR-WS, indice del volume 3256 (pagine non indicate dal volume).
+@inproceedings{licari2022italianlegalbert,
+  author    = {Licari, Daniele and Comand{\`e}, Giovanni},
+  title     = {{ITALIAN-LEGAL-BERT}: A Pre-trained Transformer Language Model for {Italian} Law},
+  booktitle = {Companion Proceedings of the 23rd International Conference on Knowledge Engineering and Knowledge Management (EKAW 2022)},
+  series    = {CEUR Workshop Proceedings},
+  volume    = {3256},
+  address   = {Bozen-Bolzano, Italy},
+  year      = {2022},
+  url       = {https://ceur-ws.org/Vol-3256/km4law3.pdf},
+}
+
+% Verificato: Crossref (DOI).
+% Capitolo 3: indicata come "estensione su ScienceDirect nel 2023"; e' su Computer Law &
+% Security Review, vol. 52, fascicolo di aprile 2024.
+@article{licari2024italianlegalbert,
+  author  = {Licari, Daniele and Comand{\`e}, Giovanni},
+  title   = {{ITALIAN-LEGAL-BERT} models for improving natural language processing tasks in the {Italian} legal domain},
+  journal = {Computer Law \& Security Review},
+  volume  = {52},
+  pages   = {105908},
+  year    = {2024},
+  doi     = {10.1016/j.clsr.2023.105908},
+}
+
+% Verificato: arXiv 2412.02427. Preprint; su Zenodo esiste una versione successiva per dg.o 2026,
+% non verificata come pubblicata.
+@misc{bachinger2024gerps,
+  author        = {Bachinger, Sarah T. and Unger, Christoph and Erd, Robin and Feddoul, Leila and Lachenmaier, Clara and Zarrie{\ss}, Sina and K{\"o}nig-Ries, Birgitta},
+  title         = {{GerPS-Compare}: Comparing {NER} methods for legal norm analysis},
+  year          = {2024},
+  eprint        = {2412.02427},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  doi           = {10.48550/arXiv.2412.02427},
+}
+
+% Verificato: Crossref (DOI, pagine, titolo del volume).
+% Parziale: il numero di volume LNCS (11702) viene da un motore di ricerca, non dal registro.
+@inproceedings{leitner2019finegrained,
+  author    = {Leitner, Elena and Rehm, Georg and Moreno-Schneider, Julian},
+  title     = {Fine-Grained Named Entity Recognition in Legal Documents},
+  booktitle = {Semantic Systems. The Power of {AI} and Knowledge Graphs (SEMANTiCS 2019)},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {11702},
+  pages     = {272--287},
+  publisher = {Springer International Publishing},
+  year      = {2019},
+  doi       = {10.1007/978-3-030-33220-4_20},
+}
+
+% --- 1.3 Topic modeling con NMF --------------------------------------------------
+
+% Verificato: arXiv 2104.14028 (preprint, 2021) e NSF Public Access Repository (SIAM
+% Undergraduate Research Online, vol. 15, 2022, ISSN 2327-7807; nessun DOI assegnato).
+@article{budahazy2022nmf,
+  author  = {Budahazy, Ryan and Cheng, Lu and Huang, Yihuan and Johnson, Andrew and Li, Pengyu and Vendrow, Joshua and Wu, Zhoutong and Molitor, Denali and Rebrova, Elizaveta and Needell, Deanna},
+  title   = {Analysis of Legal Documents via Non-negative Matrix Factorization Methods},
+  journal = {SIAM Undergraduate Research Online},
+  volume  = {15},
+  year    = {2022},
+  note    = {Preprint: arXiv:2104.14028},
+  url     = {https://arxiv.org/abs/2104.14028},
+}
+
+% Verificato: Crossref (DOI).
+% Capitolo 3: citato come 2016 (data del preprint arXiv 1607.03055); la versione pubblicata
+% e' del 2017.
+@article{greene2017political,
+  author  = {Greene, Derek and Cross, James P.},
+  title   = {Exploring the Political Agenda of the {European} {Parliament} Using a Dynamic Topic Modeling Approach},
+  journal = {Political Analysis},
+  volume  = {25},
+  number  = {1},
+  pages   = {77--94},
+  year    = {2017},
+  doi     = {10.1017/pan.2016.7},
+}
+
+% Verificato: Crossref (DOI) e arXiv 2502.20364 (nomi completi degli autori).
+% Capitolo 3: citato come "un lavoro ICAIL 2026", senza autori; e' negli atti della
+% ventesima edizione, ICAIL 2025.
+@inproceedings{barron2025bridging,
+  author    = {Barron, Ryan C. and Eren, Maksim E. and Serafimova, Olga M. and Matuszek, Cynthia and Alexandrov, Boian S.},
+  title     = {Bridging Legal Knowledge and {AI}: Retrieval-Augmented Generation with Vector Stores, Knowledge Graphs, and Hierarchical Non-negative Matrix Factorization},
+  booktitle = {Proceedings of the Twentieth International Conference on Artificial Intelligence and Law (ICAIL 2025)},
+  pages     = {51--60},
+  publisher = {ACM},
+  year      = {2025},
+  doi       = {10.1145/3769126.3769215},
+}
+
+% --- 1.4 Topological Data Analysis su testo -------------------------------------
+
+% Verificato: pagina degli atti IJCAI 2013 (pagina iniziale 1953).
+% Parziale: la pagina finale (1959) viene da dblp tramite motore di ricerca.
+@inproceedings{zhu2013persistent,
+  author    = {Zhu, Xiaojin},
+  title     = {Persistent Homology: An Introduction and a New Text Representation for Natural Language Processing},
+  booktitle = {Proceedings of the Twenty-Third International Joint Conference on Artificial Intelligence (IJCAI 2013)},
+  pages     = {1953--1959},
+  publisher = {AAAI Press},
+  year      = {2013},
+  url       = {https://www.ijcai.org/Proceedings/13/Papers/288.pdf},
+}
+
+% Verificato: arXiv 2003.13138. Preprint.
+% Capitolo 3: autori elencati come "Gholizadeh, Seyeditabari, Savle e Zadrozny"; l'ordine
+% corretto e' quello sotto. Esiste un secondo articolo dello stesso anno, a tre autori
+% (senza Savle, voce gholizadeh2020novel): scegliere quello effettivamente inteso nel testo.
+@misc{gholizadeh2020additive,
+  author        = {Gholizadeh, Shafie and Savle, Ketki and Seyeditabari, Armin and Zadrozny, Wlodek},
+  title         = {Topological Data Analysis in Text Classification: Extracting Features with Additive Information},
+  year          = {2020},
+  eprint        = {2003.13138},
+  archivePrefix = {arXiv},
+  doi           = {10.48550/arXiv.2003.13138},
+}
+
+% Verificato: PMLR (voce BibTeX ufficiale).
+@inproceedings{fitz2022shape,
+  author    = {Fitz, Stephen},
+  title     = {The Shape of Words -- topological structure in natural language data},
+  booktitle = {Proceedings of Topological, Algebraic, and Geometric Learning Workshops 2022},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {196},
+  pages     = {116--123},
+  publisher = {PMLR},
+  year      = {2022},
+  url       = {https://proceedings.mlr.press/v196/fitz22a.html},
+}
+
+% Verificato: arXiv 2103.14131. Preprint.
+% Capitolo 3: citato come "un lavoro del 2021 [...] dataset TED Talk", senza autori.
+@misc{das2021tedtalk,
+  author        = {Das, Shouman and Haque, Syed A. and Tanveer, Md. Iftekhar},
+  title         = {Persistence Homology of {TEDtalk}: Do Sentence Embeddings Have a Topological Shape?},
+  year          = {2021},
+  eprint        = {2103.14131},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG},
+  doi           = {10.48550/arXiv.2103.14131},
+}
+
+% Verificato: arXiv 1611.09435 ("Final report for undergraduate research project").
+@misc{pietrosanu2016persistent,
+  author        = {Pietrosanu, Matthew},
+  title         = {The analysis of topological structure in data using persistent homology: applications to lexical word association networks},
+  year          = {2016},
+  eprint        = {1611.09435},
+  archivePrefix = {arXiv},
+  doi           = {10.48550/arXiv.1611.09435},
+  note          = {Rapporto finale di un progetto di ricerca undergraduate},
+}
+
+% --- 1.5 Formal Concept Analysis --------------------------------------------------
+
+% Verificato: Crossref (DOI dell'edizione Springer 1999).
+@book{ganter1999fca,
+  author    = {Ganter, Bernhard and Wille, Rudolf},
+  title     = {Formal Concept Analysis: Mathematical Foundations},
+  publisher = {Springer},
+  address   = {Berlin, Heidelberg},
+  year      = {1999},
+  doi       = {10.1007/978-3-642-59830-2},
+}
+
+% Verificato: Crossref (DOI). E' la ripubblicazione del rapporto tecnico originale
+% (TH Darmstadt, 1984) in cui e' introdotto l'algoritmo Next Closure.
+% Capitolo 3: citato come "Ganter 1984"; la versione accessibile e citabile e' questa.
+@incollection{ganter2010twobasic,
+  author    = {Ganter, Bernhard},
+  title     = {Two Basic Algorithms in Concept Analysis},
+  booktitle = {Formal Concept Analysis (ICFCA 2010)},
+  series    = {Lecture Notes in Computer Science},
+  pages     = {312--340},
+  publisher = {Springer},
+  address   = {Berlin, Heidelberg},
+  year      = {2010},
+  doi       = {10.1007/978-3-642-11928-6_22},
+  note      = {Ripubblicazione del rapporto tecnico del 1984, TH Darmstadt},
+}
+
+% Verificato: Crossref (DOI).
+@article{stumme2002titanic,
+  author  = {Stumme, Gerd and Taouil, Rafik and Bastide, Yves and Pasquier, Nicolas and Lakhal, Lotfi},
+  title   = {Computing iceberg concept lattices with {TITANIC}},
+  journal = {Data \& Knowledge Engineering},
+  volume  = {42},
+  number  = {2},
+  pages   = {189--222},
+  year    = {2002},
+  doi     = {10.1016/S0169-023X(02)00057-5},
+}
+
+% Verificato: Crossref (DOI). Gli stessi autori hanno una rassegna gemella sullo stesso
+% numero della rivista ("... A survey on models and techniques", pp. 6601-6623).
+@article{poelmans2013fca,
+  author  = {Poelmans, Jonas and Ignatov, Dmitry I. and Kuznetsov, Sergei O. and Dedene, Guido},
+  title   = {Formal concept analysis in knowledge processing: A survey on applications},
+  journal = {Expert Systems with Applications},
+  volume  = {40},
+  number  = {16},
+  pages   = {6538--6560},
+  year    = {2013},
+  doi     = {10.1016/j.eswa.2013.05.009},
+}
+
+% Verificato: Crossref (DOI) e Semantic Scholar (nomi degli autori).
+% Parziale: la grafia del nome del primo autore varia tra le fonti (Nyein/Nyeint);
+% sono usate le iniziali, come nel registro DOI.
+@inproceedings{myat2005fca,
+  author    = {Myat, N. N. and {Khin Haymar Saw Hla}},
+  title     = {A Combined Approach of Formal Concept Analysis and Text Mining for Concept Based Document Clustering},
+  booktitle = {Proceedings of the 2005 IEEE/WIC/ACM International Conference on Web Intelligence (WI'05)},
+  pages     = {330--333},
+  publisher = {IEEE},
+  year      = {2005},
+  doi       = {10.1109/WI.2005.1},
+}
+
+% --- 1.6 Derivazione di requisiti e componenti software da normativa -------------
+
+% Verificato: arXiv 2607.04448 (lo strumento presentato si chiama Reg2Req). Preprint.
+% Capitolo 3: citato come "Reg2Req (2026)", senza autori.
+@misc{nair2026reg2req,
+  author        = {Nair, Pavithra P. M. and Anish, Preethu Rose},
+  title         = {From Regulation to Requirements: An Automated Requirement Derivation and Explanation Pipeline},
+  year          = {2026},
+  eprint        = {2607.04448},
+  archivePrefix = {arXiv},
+  doi           = {10.48550/arXiv.2607.04448},
+}
+
+% Verificato: Crossref (DOI).
+% Capitolo 3: descritto come un lavoro che "propone un framework per stabilire la
+% compliance regolamentare dei requisiti software"; e' invece una rassegna sistematica di
+% framework orientati agli obiettivi. Il framework "Establishing Regulatory Compliance for
+% Software Requirements" e' di altri autori: voce ingolfo2011establishing.
+@inproceedings{ghanavati2011systematic,
+  author    = {Ghanavati, Sepideh and Amyot, Daniel and Peyton, Liam},
+  title     = {A systematic review of goal-oriented requirements management frameworks for business process compliance},
+  booktitle = {2011 Fourth International Workshop on Requirements Engineering and Law (RELAW)},
+  pages     = {25--34},
+  publisher = {IEEE},
+  year      = {2011},
+  doi       = {10.1109/RELAW.2011.6050270},
+}
+
+% Parziale: titolo, autore, universita' e anno confermati dai risultati di ricerca che
+% rimandano al repository NCSU (handle 1840.16/3376); la pagina del repository blocca
+% l'accesso automatico e il PDF non e' stato letto.
+% Capitolo 3: citato come "~2009".
+@phdthesis{breaux2009legal,
+  author = {Breaux, Travis D.},
+  title  = {Legal Requirements Acquisition for the Specification of Legally Compliant Information Systems},
+  school = {North Carolina State University},
+  year   = {2009},
+  url    = {https://repository.lib.ncsu.edu/handle/1840.16/3376},
+}
+
+% Verificato: Crossref (DOI).
+% Capitolo 3: attribuito ad "Amaral, Abualhaija, Torre, Sabetzadeh e Briand (2021-2023)",
+% che sono gli autori di un altro lavoro (voce amaral2022privacy, completezza delle privacy
+% policy). La verifica di conformita' dei DPA al GDPR descritta nel capitolo e' questa,
+% con gli autori sotto.
+@article{amaralcejas2023dpa,
+  author  = {Amaral Cejas, Orlando and Azeem, Muhammad Ilyas and Abualhaija, Sallam and Briand, Lionel C.},
+  title   = {{NLP}-Based Automated Compliance Checking of Data Processing Agreements Against {GDPR}},
+  journal = {IEEE Transactions on Software Engineering},
+  volume  = {49},
+  number  = {9},
+  pages   = {4282--4303},
+  year    = {2023},
+  doi     = {10.1109/TSE.2023.3288901},
+}
+
+% =============================================================================
+% 2. METODI USATI NELLA PIPELINE
+% =============================================================================
+
+% Parziale: nessun DOI; atti e pagine (29-39) confermati da fonti secondarie concordanti.
+@inproceedings{wirth2000crispdm,
+  author    = {Wirth, R{\"u}diger and Hipp, Jochen},
+  title     = {{CRISP-DM}: Towards a Standard Process Model for Data Mining},
+  booktitle = {Proceedings of the 4th International Conference on the Practical Applications of Knowledge Discovery and Data Mining},
+  pages     = {29--39},
+  year      = {2000},
+}
+
+% Verificato: documento ufficiale del consorzio CRISP-DM (copia distribuita da IBM/SPSS).
+@techreport{chapman2000crispdm,
+  author      = {Chapman, Pete and Clinton, Julian and Kerber, Randy and Khabaza, Thomas and Reinartz, Thomas and Shearer, Colin and Wirth, R{\"u}diger},
+  title       = {{CRISP-DM} 1.0: Step-by-step data mining guide},
+  institution = {CRISP-DM Consortium (NCR, SPSS, DaimlerChrysler, OHRA)},
+  year        = {2000},
+  url         = {https://public.dhe.ibm.com/software/analytics/spss/documentation/modeler/14.2/es/CRISP-DM.pdf},
+}
+
+% Verificato: Crossref (DOI). Pesatura TF-IDF.
+@article{salton1988termweighting,
+  author  = {Salton, Gerard and Buckley, Christopher},
+  title   = {Term-weighting approaches in automatic text retrieval},
+  journal = {Information Processing \& Management},
+  volume  = {24},
+  number  = {5},
+  pages   = {513--523},
+  year    = {1988},
+  doi     = {10.1016/0306-4573(88)90021-0},
+}
+
+% Verificato: Crossref (DOI). NMF.
+@article{lee1999nmf,
+  author  = {Lee, Daniel D. and Seung, H. Sebastian},
+  title   = {Learning the parts of objects by non-negative matrix factorization},
+  journal = {Nature},
+  volume  = {401},
+  number  = {6755},
+  pages   = {788--791},
+  year    = {1999},
+  doi     = {10.1038/44565},
+}
+
+% Verificato: Crossref (DOI). Inizializzazione NNDSVD, usata da topic_modeling.py (init="nndsvda").
+@article{boutsidis2008nndsvd,
+  author  = {Boutsidis, Christos and Gallopoulos, Efstratios},
+  title   = {{SVD} based initialization: A head start for nonnegative matrix factorization},
+  journal = {Pattern Recognition},
+  volume  = {41},
+  number  = {4},
+  pages   = {1350--1362},
+  year    = {2008},
+  doi     = {10.1016/j.patcog.2007.09.010},
+}
+
+% Verificato: Crossref (DOI). Omologia persistente.
+@article{edelsbrunner2002persistence,
+  author  = {Edelsbrunner, Herbert and Letscher, David and Zomorodian, Afra},
+  title   = {Topological Persistence and Simplification},
+  journal = {Discrete \& Computational Geometry},
+  volume  = {28},
+  number  = {4},
+  pages   = {511--533},
+  year    = {2002},
+  doi     = {10.1007/s00454-002-2885-2},
+}
+
+% Verificato: Crossref (DOI). Introduzione generale alla TDA.
+@article{carlsson2009topology,
+  author  = {Carlsson, Gunnar},
+  title   = {Topology and data},
+  journal = {Bulletin of the American Mathematical Society},
+  volume  = {46},
+  number  = {2},
+  pages   = {255--308},
+  year    = {2009},
+  doi     = {10.1090/S0273-0979-09-01249-X},
+}
+
+% Verificato: Crossref (DOI).
+@inproceedings{devlin2019bert,
+  author    = {Devlin, Jacob and Chang, Ming-Wei and Lee, Kenton and Toutanova, Kristina},
+  title     = {{BERT}: Pre-training of Deep Bidirectional Transformers for Language Understanding},
+  booktitle = {Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)},
+  pages     = {4171--4186},
+  publisher = {Association for Computational Linguistics},
+  year      = {2019},
+  doi       = {10.18653/v1/N19-1423},
+}
+
+% Verificato: Crossref (DOI). Modello inglese nlpaueb/legal-bert-base-uncased.
+@inproceedings{chalkidis2020legalbert,
+  author    = {Chalkidis, Ilias and Fergadiotis, Manos and Malakasiotis, Prodromos and Aletras, Nikolaos and Androutsopoulos, Ion},
+  title     = {{LEGAL-BERT}: The Muppets straight out of Law School},
+  booktitle = {Findings of the Association for Computational Linguistics: EMNLP 2020},
+  pages     = {2898--2904},
+  publisher = {Association for Computational Linguistics},
+  year      = {2020},
+  doi       = {10.18653/v1/2020.findings-emnlp.261},
+}
+
+% Verificato: ACL Anthology (voce BibTeX ufficiale). Modello francese dascim/juribert-base.
+@inproceedings{douka2021juribert,
+  author    = {Douka, Stella and Abdine, Hadi and Vazirgiannis, Michalis and El Hamdani, Rajaa and Restrepo Amariles, David},
+  title     = {{JuriBERT}: A Masked-Language Model Adaptation for {French} Legal Text},
+  booktitle = {Proceedings of the Natural Legal Language Processing Workshop 2021},
+  pages     = {95--101},
+  address   = {Punta Cana, Dominican Republic},
+  publisher = {Association for Computational Linguistics},
+  year      = {2021},
+  doi       = {10.18653/v1/2021.nllp-1.9},
+}
+
+% Verificato: Crossref (DOI). Test di McNemar per il confronto appaiato regole/BERT.
+@article{mcnemar1947note,
+  author  = {McNemar, Quinn},
+  title   = {Note on the Sampling Error of the Difference Between Correlated Proportions or Percentages},
+  journal = {Psychometrika},
+  volume  = {12},
+  number  = {2},
+  pages   = {153--157},
+  year    = {1947},
+  doi     = {10.1007/BF02295996},
+}
+
+% Verificato: Crossref (DOI). Algoritmo ungherese, usato per allineare i topic tra
+% fattorizzazioni NMF diverse (analyze_cluster_sensitivity.py).
+@article{kuhn1955hungarian,
+  author  = {Kuhn, Harold W.},
+  title   = {The {Hungarian} method for the assignment problem},
+  journal = {Naval Research Logistics Quarterly},
+  volume  = {2},
+  number  = {1--2},
+  pages   = {83--97},
+  year    = {1955},
+  doi     = {10.1002/nav.3800020109},
+}
+
+% Verificato: Crossref (DOI). Indice di Jaccard, usato per la coesione dei cluster.
+@article{jaccard1912distribution,
+  author  = {Jaccard, Paul},
+  title   = {The distribution of the flora in the alpine zone},
+  journal = {New Phytologist},
+  volume  = {11},
+  number  = {2},
+  pages   = {37--50},
+  year    = {1912},
+  doi     = {10.1111/j.1469-8137.1912.tb05611.x},
+}
+
+% =============================================================================
+% 3. LETTERATURA PER L'INTERPRETAZIONE "MAESTRO E ALLIEVO" (PROPOSTA)
+% =============================================================================
+% Legal BERT e' addestrato sulle etichette prodotte dalle regole (silver label) e ne
+% eredita gli errori, pur superandole leggermente nella v1. Queste voci sono il quadro
+% teorico piu' vicino (supervisione debole, distillazione, allievo che supera il maestro).
+% Non sono ancora citate nella tesi: vanno lette e valutate prima di usarle.
+
+% Verificato: Crossref (DOI). Supervisione debole: etichette di addestramento generate da regole.
+@article{ratner2017snorkel,
+  author  = {Ratner, Alexander and Bach, Stephen H. and Ehrenberg, Henry and Fries, Jason and Wu, Sen and R{\'e}, Christopher},
+  title   = {Snorkel: Rapid Training Data Creation with Weak Supervision},
+  journal = {Proceedings of the VLDB Endowment},
+  volume  = {11},
+  number  = {3},
+  pages   = {269--282},
+  year    = {2017},
+  doi     = {10.14778/3157794.3157797},
+}
+
+% Verificato: arXiv 1503.02531 (presentato al NIPS 2014 Deep Learning Workshop).
+@misc{hinton2015distilling,
+  author        = {Hinton, Geoffrey and Vinyals, Oriol and Dean, Jeff},
+  title         = {Distilling the Knowledge in a Neural Network},
+  year          = {2015},
+  eprint        = {1503.02531},
+  archivePrefix = {arXiv},
+  doi           = {10.48550/arXiv.1503.02531},
+}
+
+% Verificato: PMLR (voce BibTeX ufficiale). Allievo con la stessa architettura che supera il maestro.
+@inproceedings{furlanello2018bornagain,
+  author    = {Furlanello, Tommaso and Lipton, Zachary and Tschannen, Michael and Itti, Laurent and Anandkumar, Anima},
+  title     = {Born Again Neural Networks},
+  booktitle = {Proceedings of the 35th International Conference on Machine Learning},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {80},
+  pages     = {1607--1616},
+  publisher = {PMLR},
+  year      = {2018},
+  url       = {https://proceedings.mlr.press/v80/furlanello18a.html},
+}
+
+% =============================================================================
+% 4. FONTI NORMATIVE, MODELLI PRE-ADDESTRATI E SOFTWARE
+% =============================================================================
+
+% Verificato: intestazione del file sorgente sources/AIAct_IT.html, scaricato da EUR-Lex
+% (testo consolidato CELEX 02024R1689-20240712). Le versioni inglese e francese usate
+% dalla pipeline sono sources/AIAct_EN.html e sources/AIAct_FR.html, stesso testo consolidato.
+@misc{aiact2024,
+  author       = {{Parlamento europeo e Consiglio dell'Unione europea}},
+  title        = {Regolamento ({UE}) 2024/1689 del {Parlamento} europeo e del {Consiglio}, del 13 giugno 2024, che stabilisce regole armonizzate sull'intelligenza artificiale (regolamento sull'intelligenza artificiale)},
+  howpublished = {Gazzetta ufficiale dell'Unione europea, L, 2024/1689, 12 luglio 2024},
+  year         = {2024},
+  url          = {http://data.europa.eu/eli/reg/2024/1689/oj},
+  note         = {Testo consolidato usato: CELEX 02024R1689-20240712, EUR-Lex},
+}
+
+% Verificato: Crossref (DOI). Trattato fondamentale sulla topologia computazionale e omologia persistente.
+@book{edelsbrunner2010computational,
+  author    = {Edelsbrunner, Herbert and Harer, John L.},
+  title     = {Computational Topology: An Introduction},
+  publisher = {American Mathematical Society},
+  address   = {Providence, RI},
+  year      = {2010},
+  doi       = {10.1090/mbk/069},
+}
+
+% Verificato: Crossref (DOI). Manuale di riferimento per la validita' sperimentale e Threats to Validity.
+@book{wohlin2012experimentation,
+  author    = {Wohlin, Claes and Runeson, Per and H{\"o}st, Martin and Ohlsson, Magnus C. and Regnell, Bj{\"o}rn and Wessl{\'e}n, Anders},
+  title     = {Experimentation in Software Engineering},
+  publisher = {Springer},
+  address   = {Berlin, Heidelberg},
+  year      = {2012},
+  doi       = {10.1007/978-3-642-29044-2},
+}

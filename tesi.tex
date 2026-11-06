@@ -36,6 +36,7 @@
 
 % --- 5. Bibliografia ----------------------------------------------------------
 \usepackage[backend=biber]{biblatex}
+\addbibresource{bibliografia.bib}
 
 % --- 6. Comandi personalizzati del Capitolo 4 ---------------------------------
 \DeclareRobustCommand{\file}[1]{\texttt{\detokenize{#1}}}
@@ -51,21 +52,26 @@
 \crefname{appendix}{Appendice}{Appendici}
 
 % --- Metadati del documento ---------------------------------------------------
-\title{Tesi di Laurea}
+\title{Tesi di Laurea\\[0.5em]\large Rule-based or Neural? A Comparative Analysis in the AI Act Compliance Domain}
 \author{Misael Monaco}
-\date{Settembre 2026}
+\date{2026}
 
 \begin{document}
 
 \maketitle
 
 \tableofcontents
-
 \clearpage
 
-% =============================================================================
-% CAPITOLO 1
-% =============================================================================
+\addcontentsline{toc}{chapter}{\listfigurename}
+\listoffigures
+\clearpage
+
+\addcontentsline{toc}{chapter}{\listtablename}
+\listoftables
+\clearpage
+
+
 % =============================================================================
 % CAPITOLO 1
 % =============================================================================
@@ -159,7 +165,7 @@ La Figura \ref{fig:venn_perimetro} riassume visivamente il confine all'intersezi
 
 \section{Quadro metodologico: la pipeline come processo CRISP-DM}
 \subsection{Perché CRISP-DM}
-CRISP-DM (\textit{Cross-Industry Standard Process for Data Mining}; Chapman et al., 2000; Wirth e Hipp, 2000) descrive un progetto di analisi dei dati in sei fasi: comprensione del problema, comprensione dei dati, preparazione dei dati, modellazione, valutazione e messa in uso. Le fasi non sono strettamente sequenziali: il modello prevede ritorni espliciti alle fasi precedenti quando la valutazione mostra un problema.
+CRISP-DM (\textit{Cross-Industry Standard Process for Data Mining}; Chapman et al., 2000 \cite{chapman2000crispdm}; Wirth e Hipp, 2000 \cite{wirth2000crispdm}) descrive un progetto di analisi dei dati in sei fasi: comprensione del problema, comprensione dei dati, preparazione dei dati, modellazione, valutazione e messa in uso. Le fasi non sono strettamente sequenziali: il modello prevede ritorni espliciti alle fasi precedenti quando la valutazione mostra un problema.
 
 È una cornice adatta a questo lavoro non per analogia, ma perché quei ritorni sono avvenuti davvero, cinque volte ((Tabella~\ref{tab:dettaglio_iterazioni}). In ognuno, un'anomalia emersa valutando i risultati ha richiesto di correggere una fase a monte, e la correzione è stata poi verificata su dati non utilizzati per ricavarla.
 
@@ -432,81 +438,83 @@ Per offrire una trattazione compatta, rigorosa e priva di ridondanze, l'opera è
 % NLP giuridico, modalità deontica, benchmark AI Act (Davvetas et al.)
 Il primo passo della pipeline, classificare ogni proposizione come obbligo positivo, divieto, eccezione, definizione o altro, appartiene al filone che estrae la struttura normativa (modalità deontica, obblighi, rinvii) dai testi legislativi.
 
-Brandsma, Blom-Hansen, Meijer e Moodley (2025) [brandsma2025regulatory] individuano automaticamente le frasi a contenuto regolatorio in circa 180.000 atti legislativi dell'UE adottati tra il 1952 e il 2023, confrontando un approccio basato sull'analisi sintattica delle dipendenze e sull'Institutional Grammar Tool con un modello transformer. Il loro compito corrisponde al primo filtro della pipeline della tesi, che separa le proposizioni normative dal resto del testo (Capitolo 3), più che alla classificazione fine del tipo di obbligo. Le scelte di scala sono complementari: loro coprono l'intera legislazione dell'UE; la presente tesi lavora su un singolo regolamento orizzontale, un perimetro che consente di validare a mano ogni passaggio della pipeline con protocolli ciechi. Anche il confronto tra un metodo basato su regole esplicite e un modello neurale ha un corrispettivo nella tesi, dove riguarda il riconoscimento delle entità (§2.2 e Capitolo 5).
+Brandsma, Blom-Hansen, Meijer e Moodley (2025) \cite{brandsma2025regulatory} individuano automaticamente le frasi a contenuto regolatorio in circa 180.000 atti legislativi dell'UE adottati tra il 1952 e il 2023, confrontando un approccio basato sull'analisi sintattica delle dipendenze e sull'Institutional Grammar Tool con un modello transformer. Il loro compito corrisponde al primo filtro della pipeline della tesi, che separa le proposizioni normative dal resto del testo (Capitolo 3), più che alla classificazione fine del tipo di obbligo. Le scelte di scala sono complementari: loro coprono l'intera legislazione dell'UE; la presente tesi lavora su un singolo regolamento orizzontale, un perimetro che consente di validare a mano ogni passaggio della pipeline con protocolli ciechi. Anche il confronto tra un metodo basato su regole esplicite e un modello neurale ha un corrispettivo nella tesi, dove riguarda il riconoscimento delle entità (§2.2 e Capitolo 5).
 
-Sulla modalità deontica, Minkova, Chakravarthy e van Dijck (2023) [minkova2023deontic] propongono un classificatore di obbligo, permesso e divieto per la legislazione dell'UE in condizioni di scarsità di dati annotati. Koniaris, Kotronis, Giannini e Tsanakas (2026) [koniaris2026euro5k] introducono EURO-5K, un benchmark per l'estrazione degli obblighi di comunicazione dalla normativa dell'UE, e confrontano modelli pre-addestrati sul dominio con modelli generici: un confronto analogo a quello tra regole e modello neurale discusso in questa sede.
+Sulla modalità deontica, Minkova, Chakravarthy e van Dijck (2023) \cite{minkova2023deontic} propongono un classificatore di obbligo, permesso e divieto per la legislazione dell'UE in condizioni di scarsità di dati annotati. Koniaris, Kotronis, Giannini e Tsanakas (2026) \cite{koniaris2026euro5k} introducono EURO-5K, un benchmark per l'estrazione degli obblighi di comunicazione dalla normativa dell'UE, e confrontano modelli pre-addestrati sul dominio con modelli generici: un confronto analogo a quello tra regole e modello neurale discusso in questa sede.
 
-Il lavoro più affine per oggetto è l'AI Act Evaluation Benchmark di Davvetas, Papademas, Ziouvelou e Karkaletsis (2026) [davvetas2026aiact]: un dataset aperto per la classificazione del livello di rischio, l'individuazione degli articoli pertinenti e la generazione degli obblighi, costruito proprio sull'AI Act. È l'unico lavoro reperito che condivide con la tesi sia il testo sorgente sia la finalità di estrazione, costituendo il termine di confronto diretto per i risultati di validazione del Capitolo 5.
+Il lavoro più affine per oggetto è l'AI Act Evaluation Benchmark di Davvetas, Papademas, Ziouvelou e Karkaletsis (2026) \cite{davvetas2026aiact}: un dataset aperto per la classificazione del livello di rischio, l'individuazione degli articoli pertinenti e la generazione degli obblighi, costruito proprio sull'AI Act. È l'unico lavoro reperito che condivide con la tesi sia il testo sorgente sia la finalità di estrazione, costituendo il termine di confronto diretto per i risultati di validazione del Capitolo 5.
 
 \section{Riconoscimento delle entità nel testo giuridico (Legal NER)}
 % Modelli per l'italiano (Legal-BERT, GiusBERTo), benchmark multilingue (LEGAL-BERT, JuriBERT), benchmark GerPS-Compare
-Per il riconoscimento di attori, autorità e rinvii normativi, il riferimento più immediato nell'elaborazione dell'italiano giuridico è rappresentato da Pozzi, Rubini, Bernasconi, Palmonari(2023)[pozzi2023nerl], che applicano Named Entity Recognition e Linking a 146 sentenze civili italiane annotate a mano: medesima lingua di annotazione affine, ma su un genere testuale differente (giurisprudenza invece di legislazione cogente).
+Per il riconoscimento di attori, autorità e rinvii normativi, il riferimento più immediato nell'elaborazione dell'italiano giuridico è rappresentato da Pozzi, Rubini, Bernasconi e Palmonari (2023) \cite{pozzi2023nerl}, che applicano Named Entity Recognition e Linking a 146 sentenze civili italiane annotate a mano: medesima lingua di annotazione affine, ma su un genere testuale differente (giurisprudenza invece di legislazione cogente).
 
-I modelli linguistici dedicati al diritto italiano sono rappresentati da Italian-Legal-BERT (Licari e Comandè, 2022 [licari2022italianlegalbert]; versione estesa in Computer Law \& Security Review, 2024 [licari2024italianlegalbert]), il modello impiegato da questa tesi focalizzato sulla de-identificazione dei dati personali nelle decisioni della Corte dei conti. Per l'estensione multilingue, la tesi impiega LEGAL-BERT (Chalkidis et al., 2020 [chalkidis2020legalbert]) per l'inglese e JuriBERT (Douka et al., 2021 [douka2021juribert]) per il francese. Tutti derivati dalla architettura Transformer di BERT (Devlin et al., 2019 [devlin2019bert]).
+I modelli linguistici dedicati al diritto italiano sono rappresentati da Italian-Legal-BERT (Licari e Comandè, 2022 \cite{licari2022italianlegalbert}; versione estesa in Computer Law \& Security Review, 2024 \cite{licari2024italianlegalbert}), il modello impiegato da questa tesi focalizzato sulla de-identificazione dei dati personali nelle decisioni della Corte dei conti. Per l'estensione multilingue, la tesi impiega LEGAL-BERT (Chalkidis et al., 2020 \cite{chalkidis2020legalbert}) per l'inglese e JuriBERT (Douka et al., 2021 \cite{douka2021juribert}) per il francese. Tutti derivati dalla architettura Transformer di BERT (Devlin et al., 2019 \cite{devlin2019bert}).
 
-Il confronto empirico sistemico tra regole simboliche e modelli neurali ha un precedente significativo in Bachinger et. al (2024) Bachinger et al. (2024) [bachinger2024gerps] con il benchmark GerPS-Compare. Gli autori confrontano regole, modelli discriminativi e un modello generativo sul riconoscimento delle entità in norme amministrative tedesche, rilevando che i modelli discriminativi superano gli altri sulle classi di entità a vocabolario aperto. La presente tesi approfondisce e arricchisce questo confronto  (Domanda D1, Capitolo 5): il vantaggio iniziale di Legal BERT  sulle regole è risultato essere un artefatto di lacune sintattiche del gazetter e di rumore paratestuale (note a piè di pagina); corrette le regole, i due sistemi convergono a prestazioni statisticamente indistinguibili a causa della natura "maestro-allievo" dekka supervisione debole.
+Il confronto empirico sistemico tra regole simboliche e modelli neurali ha un precedente significativo in Bachinger et al. (2024) \cite{bachinger2024gerps} con il benchmark GerPS-Compare. Gli autori confrontano regole, modelli discriminativi e un modello generativo sul riconoscimento delle entità in norme amministrative tedesche, rilevando che i modelli discriminativi superano gli altri sulle classi di entità a vocabolario aperto. La presente tesi approfondisce e arricchisce questo confronto (Domanda $\mathcal{D}_1$, Capitolo 5): il vantaggio iniziale di Legal-BERT sulle regole è risultato essere un artefatto di lacune sintattiche del gazetteer e di rumore paratestuale (note a piè di pagina); corrette le regole, i due sistemi convergono a prestazioni statisticamente indistinguibili a causa della natura "maestro-allievo" della supervisione debole.
 
-Infine, Leitner, Rehm e Moreno-Schneider (2019) [leitner2019finegrained] costituiscono un riferimento metodologico per la progettazione di tassonomie di entità a grana fine per testi normativi, con uno schema concettuale analogo alle tre classi target (\texttt{ATTORE}, \texttt{AUTORITA}, \texttt{RIF\_NORMATIVO}) adottate in questa tesi.
+Infine, Leitner, Rehm e Moreno-Schneider (2019) \cite{leitner2019finegrained} costituiscono un riferimento metodologico per la progettazione di tassonomie di entità a grana fine per testi normativi, con uno schema concettuale analogo alle tre classi target (\texttt{ATTORE}, \texttt{AUTORITA}, \texttt{RIF\_NORMATIVO}) adottate in questa tesi.
 
 
 
 \section{Topic modeling con NMF}
 % TF-IDF, NMF vs LDA/BERTopic, inizializzazione deterministica NNDSVD
-NMF (Lee e Seung, 1999 [lee1999nmf] scompone una matrice non negativa, qui la rappresentazione TF-IDF delle proposizioni (Salton e Buckley, 1988  [salton1988termweighting]), in temi e pesi. Con l'inizializzazione NNDSVD (Boutsidis e Gallopoulos, 2008 [boutsidis2008nndsvd]) il risultato è deterministico a parità di input: una proprietà che conta per la stabilità dei cluster (Capitolo 7).
+NMF (Lee e Seung, 1999 \cite{lee1999nmf}) scompone una matrice non negativa, qui la rappresentazione TF-IDF delle proposizioni (Salton e Buckley, 1988 \cite{salton1988termweighting}), in temi e pesi. Con l'inizializzazione NNDSVD (Boutsidis e Gallopoulos, 2008 \cite{boutsidis2008nndsvd}) il risultato è deterministico a parità di input: una proprietà che conta per la stabilità dei cluster (Capitolo 7).
 
-Sui testi giuridici il topic modeling è dominato da LDA e più di recente, da BERTopic; NMF è un filone minoritario. Il lavoro più vicino è quello di Budahazy et al. (2022) [budahazy2022nmf], che applicano NMF su TF-IDF a documenti giuridici (costituzioni, statuti, sentenze).
+Sui testi giuridici il topic modeling è dominato da LDA e più di recente, da BERTopic; NMF è un filone minoritario. Il lavoro più vicino è quello di Budahazy et al. (2022) \cite{budahazy2022nmf}, che applicano NMF su TF-IDF a documenti giuridici (costituzioni, statuti, sentenze).
 
-Su testi delle istituzioni europee, Greene e Cross (2017)[greene2017political] usano un topic modeling dinamico per ricostruire l'agenda politica del Parlamento europeo nel tempo: u precedente per il tipo di corpus, con tecnica ed obiettivi diveri.
+Su testi delle istituzioni europee, Greene e Cross (2017) \cite{greene2017political} usano un topic modeling dinamico per ricostruire l'agenda politica del Parlamento europeo nel tempo: un precedente per il tipo di corpus, con tecnica ed obiettivi diversi.
 
-Barron, Eren, Serafimova, Matuszek e Alexandrov (2025) [barron2025bridging] mostrano l'evoluzione recente del filone verso sistemi ibridi, che combinano NMF gerarichico, knowledge graph e generazione aumentata del recupero dei documenti. Rispetto a questi, l'uso di NMF da solo è una scelta di semplicità e interpretabilità, da motivare come tale e non presentare come uno standard del settore.
+Barron, Eren, Serafimova, Matuszek e Alexandrov (2025) \cite{barron2025bridging} mostrano l'evoluzione recente del filone verso sistemi ibridi, che combinano NMF gerarchico, knowledge graph e generazione aumentata del recupero dei documenti. Rispetto a questi, l'uso di NMF da solo è una scelta di semplicità e interpretabilità, da motivare come tale e non presentare come uno standard del settore.
 
 \section{Analisi topologica dei dati applicata al testo (TDA)}
 % Omologia persistente, complessi di Vietoris-Rips, spazi tematici
-L'omologia persistente (Edelsbrunner, Letscher e Zomorodian, 2002 [edelsbrunner2002persistence]; Carlsson, 2009 [carlsson2009topology]) descrive la forma di un insieme di punti attraverso le componenti connesse e i cicli che compaiono e scompaiono al variare di una soglia di distanza. Zhu (2013) [zhu2013persistent] la introduce come rappresentazione del testo: è il punto di partenza per ogni applicazione successiva al linguaggio. 
+L'omologia persistente (Edelsbrunner, Letscher e Zomorodian, 2002 \cite{edelsbrunner2002persistence}; Carlsson, 2009 \cite{carlsson2009topology}) descrive la forma di un insieme di punti attraverso le componenti connesse e i cicli che compaiono e scompaiono al variare di una soglia di distanza. Zhu (2013) \cite{zhu2013persistent} la introduce come rappresentazione del testo: è il punto di partenza per ogni applicazione successiva al linguaggio. 
 
-Il precedente metodologico più vicino è il lavoro di Gholizadeh et al.(2020), che usano filtrazioni di Vietoris-Rips su spazi di rappresentazione del testo per ricavare caratteristiche topologiche utili alla classificazione: la stessa famiglia usata nelle tesi sullo spazio dei temi.
+Il precedente metodologico più vicino è il lavoro di Gholizadeh et al. (2020) \cite{gholizadeh2020additive}, che usano filtrazioni di Vietoris-Rips su spazi di rappresentazione del testo per ricavare caratteristiche topologiche utili alla classificazione: la stessa famiglia usata nelle tesi sullo spazio dei temi.
 
-L'omologia persistente sulle rappresentazioni testuali resta un'area attiva. Fitz (2022) [fitz2022shape] studia la struttura topologica dei dati linguistici; Das, Haque e Tanveer (2021) [das2021tedtalk] verificano se le rappresentazioni delle frasi di un corpus di TED Talk, abbiamo una forma topologica riconoscibile; Pietrosanu (2016) [pietrosanu2016persistent], in un progetto di ricerca di laurea, applica l'omologia persistente alle reti di associazione tra parole.
+L'omologia persistente sulle rappresentazioni testuali resta un'area attiva. Fitz (2022) \cite{fitz2022shape} studia la struttura topologica dei dati linguistici; Das, Haque e Tanveer (2021) \cite{das2021tedtalk} verificano se le rappresentazioni delle frasi di un corpus di TED Talk abbiano una forma topologica riconoscibile; Pietrosanu (2016) \cite{pietrosanu2016persistent}, in un progetto di ricerca di laurea, applica l'omologia persistente alle reti di associazione tra parole.
 
 \section{Analisi dei Concetti Formali (Formal Concept Analysis, FCA)}
 % Reticoli di Galois, algoritmo Next Closure, iceberg lattice
-Il riferimento fondativo è Ganter e Wille (1999) [ganter1999fca], che definiscono contesto formale e reticolo dei concetti. L'algoritmo Next Closure, usato nella tesi per calcolare tutti i concetti, è stato proposto da Ganter nel 1984 e ripubblicata nel 2010 [ganter2010twobasic]. Per rendere leggibile il reticolo, la tesi ne rappresenta solo la parte con i concetti più frequenti (iceberg lattice), secondo l'approccio di Stumme, Taouil, Bastide, Pasquier, Lekhal(2002) [stumme2002titanic].
+Il riferimento fondativo è Ganter e Wille (1999) \cite{ganter1999fca}, che definiscono contesto formale e reticolo dei concetti. L'algoritmo Next Closure, usato nella tesi per calcolare tutti i concetti, è stato proposto da Ganter nel 1984 e ripubblicato nel 2010 \cite{ganter2010twobasic}. Per rendere leggibile il reticolo, la tesi ne rappresenta solo la parte con i concetti più frequenti (iceberg lattice), secondo l'approccio di Stumme, Taouil, Bastide, Pasquier e Lakhal (2002) \cite{stumme2002titanic}.
 
-Poelmans, Ignatov, Kuznetsov e Dedene (2013) [poelmans2013fca] offrono una rassegna ampia delle applicazioni della FCA all'astrazione di conoscenza e all'analisi dei testi.
-Un lavoro vicino al caso della tesi è quello di Myat e Hla (2005) [myat2005fca], che combina FCA e text mining per raggruppare documenti in base ai concetti condivisi.
+Poelmans, Ignatov, Kuznetsov e Dedene (2013) \cite{poelmans2013fca} offrono una rassegna ampia delle applicazioni della FCA all'astrazione di conoscenza e all'analisi dei testi.
+Un lavoro vicino al caso della tesi è quello di Myat e Hla (2005) \cite{myat2005fca}, che combina FCA e text mining per raggruppare documenti in base ai concetti condivisi.
 
 \section{Dalla normativa all'ingegneria dei requisiti e alle architetture software}
 % Legal Engineering, Reg2Req (Nair & Anish), estrazione requisiti vs sintesi di architetture
 L'ultima fase della pipeline, derivare dal testo un catalogo di componenti software, si colloca nel filone che traduce le norme in requisiti di sistema.
 
-Un precedente diretto è Reg2Req di Nair e Anish(2026) [nair2026reg2req]: una pipeline automatica che deriva requisiti software indipendenti dal sistema a partire da clausole regolamentari, valuta GDPR ed AI Act, con F1 macro e con uno studio su 25 professionisti.
+Un precedente diretto è Reg2Req di Nair e Anish (2026) \cite{nair2026reg2req}: una pipeline automatica che deriva requisiti software indipendenti dal sistema a partire da clausole regolamentari, valuta GDPR ed AI Act, con F1 macro e con uno studio su 25 professionisti.
 
-Altri esempi sono, la tesi di dottorato di Breaux(2009)[breaux2009legal] che consiste sulla aacquisizione di requisiti legali per specificare sistemi informativi conformi: l'origine dell'idea di leggere obblighi normativi come requisiti di sistema. Ghenavati, Amyot e Peyton (2011) [ghanavati2011systematic] passano in rassegnai framework orientati agli obiettivi per la conformità dei processi aziendali.
+Altri esempi sono la tesi di dottorato di Breaux (2009) \cite{breaux2009legal} sull'acquisizione di requisiti legali per specificare sistemi informativi conformi: l'origine dell'idea di leggere obblighi normativi come requisiti di sistema. Ghanavati, Amyot e Peyton (2011) \cite{ghanavati2011systematic} passano in rassegna i framework orientati agli obiettivi per la conformità dei processi aziendali.
 
-Più vicini per tecnica sono i lavori del del gruppo dell'Università del Lussemburgo. Amaral Cejas, Azeem, Abualhaija e Briand (2023) [amaralcejas2023dpa], verifica automaticamente la conformità degli accordi sul trattamento dei dati al GDPR, estraendone i requisiti con tecniche di elaborazione del inguaggio comparabili alla classificazione degli obblighi di questa tesi.
+Più vicini per tecnica sono i lavori del gruppo dell'Università del Lussemburgo. Amaral Cejas, Azeem, Abualhaija e Briand (2023) \cite{amaralcejas2023dpa} verificano automaticamente la conformità degli accordi sul trattamento dei dati al GDPR, estraendone i requisiti con tecniche di elaborazione del linguaggio comparabili alla classificazione degli obblighi di questa tesi.
 
 \section{Supervisione debole, distillazione e il paradosso maestro--allievo}
 % Snorkel, knowledge distillation, interpretazione teorica di D1
 
-Il Legal BERT della tesi non è addestrato su annotazioni umane, ma sulle etichette prodotte dalle regex. È un caso di supervisione debole: l'addestramento su etichette generate da regole o euristiche invece che dall'annotazione manuale.
+Il Legal-BERT della tesi non è addestrato su annotazioni umane, ma sulle etichette prodotte dalle regex. È un caso di supervisione debole: l'addestramento su etichette generate da regole o euristiche invece che dall'annotazione manuale.
 
-Il rapporto tra regex e BERT ricorda anche quello tra maestro e allievo nella distillazione della conoscenza (Hinton, Vinyals e Dean, 2015 [hinton2015distilling]), in cui un modello impara a riprodurre le predizioni di un altro. 
-Diversi lavori mostrano che l'allievo può superare il maestro, (Furlanello et al., 2018 [furlanello2018bornagain].
+Il rapporto tra regex e BERT ricorda anche quello tra maestro e allievo nella distillazione della conoscenza (Hinton, Vinyals e Dean, 2015 \cite{hinton2015distilling}), in cui un modello impara a riprodurre le predizioni di un altro. 
+Diversi lavori mostrano che l'allievo può superare il maestro (Furlanello et al., 2018 \cite{furlanello2018bornagain}).
 
 
-È il quadro in cui leggere il risultato della D1. BERT riproduce il 98.2\% delle predizioni delle regex. Dove le regex hanno lacune occasionali, BERT generalizza. Dove invece le regex sbagliano in modo sistematico, BERT sbaglia con loro: delle 44 entità sbagliate da entrambi i sistemi, 
+È il quadro in cui leggere il risultato della $\mathcal{D}_1$. BERT riproduce il 98.2\% delle predizioni delle regex. Dove le regex hanno lacune occasionali, BERT generalizza. Dove invece le regex sbagliano in modo sistematico, BERT sbaglia con loro: delle 44 entità sbagliate da entrambi i sistemi, la quasi totalità rifletteva difetti sistematici delle regole d'origine.
 
 
 \section{Strumenti e metodi statistici impiegati}
 % Test di McNemar (versione esatta), Algoritmo Ungherese di Munkres, Indice di Jaccard
 Le verifiche delle ipotesi sperimentali e la stabilità degli algoritmi si fondano sui seguenti metodi formali:
 \begin{itemize}  
-    \item \textbf{Test di McNemar} (McNemar, 1947[mcnemar1947note]): test non parametrico per campioni appaiati con esisto binario (entità rilevata/mancata), impegato nella formulazione binomiale esatta per verificare significatività delle discordanze tra regole e LegalBERT);
-    \item \textbf{Algoritmo di Munkers/Ungherese} (Kuhn, 1955 [kuhn1955hungarian]): impiegato per risolvere l'assegnazione ottima tra i vettori tematici generati da esecuzioni indipendenti di NMF;
-    \item \textbf{Indice di similarità di Jaccard}(Jaccard, 1912,[jaccard1912distribuition]): utilizzato per quantificare il grado di sovrapposizione degli insiemi di articoli e proposizioni associati ai cluster telematici nelle analisi di robustezza.
+    \item \textbf{Test di McNemar} (McNemar, 1947 \cite{mcnemar1947note}): test non parametrico per campioni appaiati con esito binario (entità rilevata/mancata), impiegato nella formulazione binomiale esatta per verificare significatività delle discordanze tra regole e Legal-BERT;
+    \item \textbf{Algoritmo di Munkres/Ungherese} (Kuhn, 1955 \cite{kuhn1955hungarian}): impiegato per risolvere l'assegnazione ottima tra i vettori tematici generati da esecuzioni indipendenti di NMF;
+    \item \textbf{Indice di similarità di Jaccard} (Jaccard, 1912 \cite{jaccard1912distribution}): utilizzato per quantificare il grado di sovrapposizione degli insiemi di articoli e proposizioni associati ai cluster tematici nelle analisi di robustezza.
 \end{itemize}
 
 \clearpage
+
+
 
 % =============================================================================
 % CAPITOLO 3
@@ -525,12 +533,7 @@ La derivazione di requisiti architetturali da un atto normativo orizzontale rich
 
 \begin{figure}[H]
     \centering
-    % Controlla se il file immagine esiste, altrimenti mostra un riquadro per non bloccare la compilazione
-    \IfFileExists{pipeline_architettura.png}{%
-        \includegraphics[width=0.8\linewidth]{pipeline_architettura.png}%
-    }{%
-        \fbox{\parbox[c][4cm][c]{0.8\linewidth}{\centering \texttt{[Immagine: pipeline\_architettura.png]}}}%
-    }
+    \includegraphics[width=0.8\linewidth]{pipeline_architettura.png}
     \caption[Architettura complessiva della pipeline computazionale]{Architettura tecnica end-to-end della pipeline computazionale a 5 livelli, con evidenziazione dei flussi di elaborazione e della collocazione delle tre domande di ricerca ($\mathcal{D}_1, \mathcal{D}_2, \mathcal{D}_3$).}
     \label{fig:placeholder}
 \end{figure}
@@ -550,7 +553,7 @@ Il flusso informativo attraversa cinque stadi integrati:
 
 Il corpus di riferimento è il testo consolidato del Regolamento (UE) 2024/1689 pubblicato nella Gazzetta Ufficiale dell'Unione Europea del 12 luglio 2024, scaricato direttamente da EUR-Lex (\texttt{ai\_act\_it.html}). La versione italiana costituisce l'asse principale di analisi, integrata dalle versioni ufficiali in lingua inglese (\texttt{ai\_act\_en.html}) e francese (\texttt{ai\_act\_fr.html}) per accertare la portabilità translinguistica dei metodi.
 
-\paragraph{Perimetro del testo e bonifica degli allegati}
+\subsection{Perimetro del testo e bonifica degli allegati}
 L'atto legislativo si compone di 113 articoli (distribuiti in XIII capi) e di 13 allegati tecnici. Nelle fasi preliminari della ricerca, il parser HTML inglobava impropriamente gli allegati e il paratesto finale all'interno dell'Articolo 113. 
 
 La bonifica condotta dallo script \texttt{build\_norm\_sentence\_dataset.py} ha operato tre interventi correttivi:
@@ -580,7 +583,7 @@ Gli articoli 1--112 sono rimasti rigorosamente immutati in tutte e tre le lingue
     \end{tabular}
 \end{table}
 
-\paragraph{Segmentazione interna e scelta della granularità}
+\subsection{Segmentazione interna e scelta della granularità}
 Ciascun record è segmentato in \textbf{proposizioni normative atomiche} combinando criteri sintattici ed elenchi di protezione:
 \begin{itemize}
     \item Scissione su punteggiatura forte (punto, punto interrogativo, punto esclamativo) seguita da spazio e maiuscola;
@@ -604,7 +607,7 @@ La scelta di operare a livello di \textbf{proposizione} anziché di singola \tex
 
 Ciascuna proposizione è classificata sul proprio testo mediante regole deterministiche lungo due dimensioni ortogonali: la natura deontica del comando e il livello di rischio menzionato.
 
-\paragraph{Gerarchia deontica e livelli di rischio}
+\subsection{Gerarchia deontica e livelli di rischio}
 La categoria deontica è determinata applicando una gerarchia di precedenza che assegna la prima etichetta riscontrata nel testo:
 \begin{enumerate}
     \item \texttt{definizione}: enunciati definitori brevi contenenti locuzioni come \emph{si intende per}, \emph{designa} o il costrutto \texttt{<<termine>>: spiegazione};
@@ -617,7 +620,7 @@ La precedenza dell'eccezione rispetto all'obbligo assicura che clausole compless
 
 Il \texttt{livello\_rischio} isola le menzioni esplicite nel testo: \texttt{high} (sistemi ad alto rischio o Allegato III), \texttt{unacceptable} (pratiche vietate ex Art.~5), \texttt{transparency} (obblighi di trasparenza ex Art.~50), oppure \texttt{none} (1.398 proposizioni, in cui il rischio è implicito nella collocazione sistematica).
 
-\paragraph{Estensione multilingue (Inglese e Francese)}
+\subsection{Estensione multilingue (Inglese e Francese)}
 La classificazione è stata replicata nelle versioni in lingua inglese (\texttt{build\_dataset\_en.py}) e francese (\texttt{build\_dataset\_fr.py}), gestendo le specificità sintattiche delle traduzioni ufficiali: l'inglese adotta il modale <<\emph{shall}>> (con filtri di esclusione per formule procedurali dell'atto), mentre il francese adotta la formula \texttt{<<terme>>,} con la virgola, la marcatura <<\emph{Article premier}>> e costruzioni passive all'indicativo (\emph{est/sont + participio}).
 
 La Tabella~\ref{tab:distribuzione_deontica} confronta la distribuzione delle classi deontiche estratte nelle tre lingue:
@@ -654,7 +657,7 @@ Il Named Entity Recognition estrae le tre classi fondamentali di entità nel tes
     \item \texttt{RIF\_NORMATIVO}: i riferimenti formali a componenti del Regolamento o ad altri atti legislativi (articoli, paragrafi, allegati, direttive, regolamenti).
 \end{enumerate}
 
-\paragraph{Approccio simbolico a regole (Rules v2)}
+\subsection{Approccio simbolico a regole (Rules v2)}
 Il motore a regole (\texttt{ner\_rule\_based.py}) opera mediante espressioni regolari e gazetteer calibrati sulle convenzioni tipografiche di EUR-Lex:
 \begin{itemize}
     \item \textbf{Risoluzione delle sovrapposizioni}: la funzione \texttt{resolve\_overlaps} assegna priorità allo span più lungo e specifico (ad es.\ <<\emph{organismo di valutazione della conformità}>> rispetto a <<\emph{organismo}>>);
@@ -662,7 +665,7 @@ Il motore a regole (\texttt{ner\_rule\_based.py}) opera mediante espressioni reg
     \item \textbf{Normalizzazione canonica}: ciascuna menzione viene ricondotta alla sua etichetta di dominio (ad es.\ <<\emph{deployers}>> ed <<\emph{utilizzatori}>> convergono a \texttt{deployer}), alimentando il contesto formale binario.
 \end{itemize}
 
-\paragraph{Modelli linguistici Transformer di dominio}
+\subsection{Modelli linguistici Transformer di dominio}
 Parallelamente alle regole, sono stati addestrati tre modelli Transformer pre-addestrati sul linguaggio giuridico delle rispettive lingue:
 \begin{itemize}
     \item \textbf{Italiano}: \texttt{dlicari/Italian-Legal-BERT} ($\approx 110\text{M}$ parametri; Licari et al., 2022);
@@ -676,9 +679,9 @@ Ciascun modello adotta una testa di token classification con schema IOB2 sulle t
 \section{Modellazione semantica con Non-negative Matrix Factorization (NMF)}
 \label{sec:nmf_metodologia}
 
-Per estrarre i temi latenti dell'AI Act in modo trasparente e interpretabile, la pipeline adotta la \textbf{Non-negative Matrix Factorization (NMF)} (Lee e Seung, 1999). A differenza dei metodi generativi probabilistici (LDA), NMF produce una rappresentazione a parti sparse (\emph{part-based}) che evidenzia blocchi lessicali ben definiti.
+Per estrarre i temi latenti dell'AI Act in modo trasparente e interpretabile, la pipeline adotta la \textbf{Non-negative Matrix Factorization (NMF)} (Lee e Seung, 1999 \cite{lee1999nmf}). A differenza dei metodi generativi probabilistici (LDA), NMF produce una rappresentazione a parti sparse (\emph{part-based}) che evidenzia blocchi lessicali ben definiti.
 
-\subsection*{Formulazione matematica}
+\subsection{Formulazione matematica}
 Sia $V \in \mathbb{R}_{\ge 0}^{N \times M}$ la matrice termine-documento non negativa ($N = 1.171$ proposizioni normative operative e $M$ termini distintivi), pesata mediante metrica \textbf{TF-IDF}:
 \begin{equation}
     \text{TF-IDF}(t, d, D) = \text{TF}(t, d) \times \left(1 + \ln\frac{1 + |D|}{1 + |\{d' \in D : t \in d'\}|}\right)
@@ -694,16 +697,16 @@ dove $W \in \mathbb{R}_{\ge 0}^{N \times k}$ rappresenta i pesi di assegnazione 
     \min_{W \ge 0, H \ge 0} \frac{1}{2} \|V - W H\|_F^2 + \alpha \rho (\|W\|_1 + \|H\|_1) + \frac{\alpha(1-\rho)}{2} (\|W\|_F^2 + \|H\|_F^2)
 \end{equation}
 
-\subsection*{Determinismo e selezione di $k$}
-Per eliminare la variabilità stocastica dell'inizializzazione casuale, la pipeline impiega l'algoritmo deterministico \textbf{NNDSVDa} (Boutsidis e Gallopoulos, 2008), fondato sui vettori singolari positivi della matrice SVD. Fissato \textbf{$k = 10$}, a ogni proposizione $i$ viene associato il \textbf{tema dominante} $t^*(i) = \arg\max_j W_{i, j}$.
+\subsection{Determinismo e selezione di $k$}
+Per eliminare la variabilità stocastica dell'inizializzazione casuale, la pipeline impiega l'algoritmo deterministico \textbf{NNDSVDa} (Boutsidis e Gallopoulos, 2008 \cite{boutsidis2008nndsvd}), fondato sui vettori singolari positivi della matrice SVD. Fissato \textbf{$k = 10$}, a ogni proposizione $i$ viene associato il \textbf{tema dominante} $t^*(i) = \arg\max_j W_{i, j}$.
 
 % -----------------------------------------------------------------------------
 \section{Analisi topologica dei dati (TDA)}
 \label{sec:tda_metodologia}
 
-Mentre NMF riduce ciascuna proposizione a un singolo tema dominante forzando una partizione discreta, la \textbf{Topological Data Analysis (TDA)} (Carlsson, 2009; Edelsbrunner e Harer, 2010) caratterizza la geometria intrinseca dello spazio normativo sull'intero vettore continuo dei pesi tematici.
+Mentre NMF riduce ciascuna proposizione a un singolo tema dominante forzando una partizione discreta, la \textbf{Topological Data Analysis (TDA)} (Carlsson, 2009 \cite{carlsson2009topology}; Edelsbrunner e Harer, 2010 \cite{edelsbrunner2010computational}) caratterizza la geometria intrinseca dello spazio normativo sull'intero vettore continuo dei pesi tematici.
 
-\subsection*{Spazio metrico e complessi di Vietoris-Rips}
+\subsection{Spazio metrico e complessi di Vietoris-Rips}
 Ciascuna proposizione $i \in G$ è descritta dal vettore normalizzato dei pesi tematici $w_i = (W_{i, 1}, \dots, W_{i, 10}) \in \mathbb{R}^{10}$, dotato della metrica del coseno:
 \begin{equation}
     d_{\cos}(w_i, w_j) = 1 - \frac{w_i \cdot w_j}{\|w_i\|_2 \|w_j\|_2} \in [0, 1]
@@ -711,20 +714,31 @@ Ciascuna proposizione $i \in G$ è descritta dal vettore normalizzato dei pesi t
 
 Al variare continuo del raggio di prossimità $\epsilon \ge 0$, si costruisce la filtrazione simpliciale di \textbf{Vietoris-Rips} $\text{VR}(X, \epsilon)$, i cui vertici corrispondono alle 1.171 proposizioni e i cui spigoli uniscono coppie aventi distanza $d_{\cos}(w_i, w_j) \le \epsilon$.
 
-\subsection*{Persistenza omologica}
+\subsection{Persistenza omologica}
 L'omologia persistente traccia la comparsa e la scomparsa dei generatori topologici lungo la filtrazione:
 \begin{itemize}
     \item \textbf{Gruppo $H_0$ (Numero di Betti $\beta_0(\epsilon)$)}: quantifica il numero di \textbf{componenti connesse} indipendenti a raggio $\epsilon$, permettendo di verificare se il corpus si frammenti in blocchi semantici isolati o converga in una macro-componente connessa;
     \item \textbf{Gruppo $H_1$ (Numero di Betti $\beta_1(\epsilon)$)}: quantifica i \textbf{cicli unidimensionali persistenti} (anelli chiusi di vincoli non collassabili). Un elevato numero di cicli $\beta_1$ fornisce la prova matematica che le prescrizioni dell'atto formano un reticolo di vincoli interdipendenti e non lineari.
 \end{itemize}
 
+
+La Figura ~\ref{fig:tda_filtrazione_metodologia} illustra geometricamente questo processo lungo tre valori crescenti del raggio $\epsilon$ dal regime disgiunto a raggio ridotto (a) alla formazione delle catene di archi che riducono $\beta_0(\epsilon)$ (b), fino all'emersione dei cicli persistenti $\beta_1(\epsilon)$ in $H_1$ (c), dove le relazioni circolari tra articoli interdipendenti delimitano una cavità topologica non saturata da $2$-simplessi pieni.
+
+
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=0.98\textwidth]{tda_filtrazione_metodologia}
+  \caption[Meccanismo della filtrazione di Vietoris-Rips nello spazio normativo]{Evoluzione del complesso simpliciale di Vietoris-Rips $\text{VR}(X, \epsilon)$ al crescere della soglia $\epsilon$: (a) $0$-simplessi isolati in $H_0$; (b) fusione tramite $1$-simplessi; (c) distinzione tra $2$-simplessi pieni (triangoli azzurri) e ciclo unidimensionale persistente in $H_1$ (anello rosso non collassabile).}
+  \label{fig:tda_filtrazione_metodologia}
+\end{figure}
+
 % -----------------------------------------------------------------------------
 \section{Analisi formale dei concetti (FCA)}
 \label{sec:fca_metodologia}
 
-La \textbf{Formal Concept Analysis (FCA)} (Ganter e Wille, 1999) fornisce lo strumento algebrico per derivare gerarchie concettuali esatte dalla matrice delle co-occorrenze tra proposizioni ed entità.
+La \textbf{Formal Concept Analysis (FCA)} (Ganter e Wille, 1999 \cite{ganter1999fca}) fornisce lo strumento algebrico per derivare gerarchie concettuali esatte dalla matrice delle co-occorrenze tra proposizioni ed entità.
 
-\subsection*{Il contesto formale binario $(G, M, I)$}
+\subsection{Il contesto formale binario $(G, M, I)$}
 Il contesto formale è una tripla $\mathbb{K} = (G, M, I)$, dove:
 \begin{itemize}
     \item $G$ è l'insieme di \textbf{1.171 proposizioni normative};
@@ -732,7 +746,18 @@ Il contesto formale è una tripla $\mathbb{K} = (G, M, I)$, dove:
     \item $I \subseteq G \times M$ è la relazione binaria indicante il possesso dell'attributo da parte della proposizione.
 \end{itemize}
 
-\subsection*{Connessione di Galois e reticoli Iceberg}
+La Figura~\ref{fig:fca_metodologia} sintetizza i due passaggi algebrici: nel pannello (a), la connessione di Galois isolanella matrice di incidenza $I \subseteq G \times M$ un rettangolo massimale chiuso corrispondente al concetto formale $(A, B)$, dove l'estensione di $A = B'$ raccoglie le proposizioni che condividono esattamente lo stesso significato $B = A'$; nel pannello ~(b)m ka rekazuibe d'ordina parziale $(A_1, B_1) \le (A_2, B_2)$ organizza i concetti nel diagramma di Hasse per specificità crescente dall'alto verso il basso, mentre la soglia di supporto $\text{minsup} \ge 80$ porta la coda combinatoria ($3.696$ concetti) preservando i $91$ concetti strutturali dell'\emph{Iceberg Lattice}.
+
+
+\begin{figure} [!htb]
+    \centering
+    \includegraphics[width=1\linewidth]{fca_metodologia.png}
+    \caption[Contesto formale binario, derivazione di Galois e potatura Iceberg Lattice]{Schema metodologico della Formal Concept Analysis (FCA): (a) individuazione di un concetto formale $(A, B)$ come rettangolo massimale nel contesto binario $\mathbb{K} = (G, M, I)$; (b) ordinamento nel reticolo di Hasse e potatura \emph{Iceberg Lattice} ($\text{minsup} \ge 80$).}
+    \label{fig:fca_metodologia}
+\end{figure}
+
+
+\subsection{Connessione di Galois e reticoli Iceberg}
 Gli operatori di derivazione di Galois associano a ogni sottoinsieme di oggetti $A \subseteq G$ e attributi $B \subseteq M$:
 \begin{equation}
     A' = \{m \in M \mid \forall g \in A, \, (g, m) \in I\}, \qquad B' = \{g \in G \mid \forall m \in B, \, (g, m) \in I\}
@@ -741,7 +766,7 @@ Un \textbf{concetto formale} è una coppia $(A, B)$ tale che $A' = B$ e $B' = A$
 \begin{equation}
     (A_1, B_1) \le (A_2, B_2) \iff A_1 \subseteq A_2 \quad (\iff B_2 \subseteq B_1)
 \end{equation}
-definisce un reticolo completo generato mediante l'algoritmo \textbf{Next Closure} (Ganter, 2010). Per prevenire l'esplosione combinatoria e isolare i nuclei informativi rilevanti, la pipeline estrae l'\textbf{Iceberg Lattice} (Stumme et al., 2002), selezionando i soli concetti con supporto $|A| \ge \text{minsup}$.
+definisce un reticolo completo generato mediante l'algoritmo \textbf{Next Closure} (Ganter, 2010 \cite{ganter2010twobasic}). Per prevenire l'esplosione combinatoria e isolare i nuclei informativi rilevanti, la pipeline estrae l'\textbf{Iceberg Lattice} (Stumme et al., 2002 \cite{stumme2002titanic}), selezionando i soli concetti con supporto $|A| \ge \text{minsup}$.
 
 % -----------------------------------------------------------------------------
 \section{Sintesi dei cluster bivariati e catalogo architetturale}
@@ -749,21 +774,21 @@ definisce un reticolo completo generato mediante l'algoritmo \textbf{Next Closur
 
 La fase conclusiva della pipeline formalizza il passaggio dal piano descrittivo a quello architetturale attraverso tre procedure metodologiche:
 
-\subsection*{1. Criterio di clustering bivariato Attore $\times$ Topic (Risposta a $\mathcal{D}_3$)}
+\subsection{Criterio di clustering bivariato Attore $\times$ Topic (Risposta a $\mathcal{D}_3$)}
 La combinazione tra gli attori regolati e i 10 macro-topic NMF produce una griglia di co-occorrenza. Per ogni coppia $(a, t)$, il supporto normativo è definito come:
 \begin{equation}
     \text{Supporto}(a, t) = |\{g \in G \mid g \in \text{Attore}(a) \land g \in \text{Topic}(t) \land \texttt{tipo\_obbligo}(g) \ne \text{<<definizione>>}\}|
 \end{equation}
 Fissata una soglia minima di robustezza $\text{Supporto} \ge 8$ proposizioni, si isolano i \textbf{cluster canonici sopra soglia}, garantendo che ciascun raggruppamento poggi su una base probatoria consistente.
 
-\subsection*{2. Regola di eredità strutturale per la Sezione 2 (Risposta a $\mathcal{D}_2$)}
+\subsection{Regola di eredità strutturale per la Sezione 2 (Risposta a $\mathcal{D}_2$)}
 Per superare l'impersonalità linguistica della Sezione 2 del Capo III (Artt.~8--15), i cui requisiti tecnici non citano attori espliciti nel testo, la metodologia applica una regola formale di derivazione di contesto basata sul rimando dell'Articolo~16:
 \begin{equation}
     \forall g \in \text{Sezione 2} : \texttt{has\_attore}(g) = 0 \implies \texttt{attore}(g) \leftarrow \text{<<fornitore>>}
 \end{equation}
 Tale regola ascrive oggettivamente al fornitore i requisiti di sistema (Data Governance, Logging, Human Oversight), recuperando le proposizioni orfane.
 
-\subsection*{3. Strutturazione dei 9 componenti software del catalogo}
+\subsection{Strutturazione dei 9 componenti software del catalogo}
 I cluster bivariati stabili vengono infine mappati nei \textbf{9 componenti software del catalogo architetturale} (C1--C9), articolati lungo le quattro fasi del ciclo di vita del sistema di IA:
 \begin{enumerate}
     \item \emph{Sviluppo e classificazione}: C1 (Vaglio e governance del rischio), C5 (Governance test in condizioni reali), C6 (Modulo conformità GPAI);
@@ -772,9 +797,17 @@ I cluster bivariati stabili vengono infine mappati nei \textbf{9 componenti soft
     \item \emph{Monitoraggio post-market}: C4 (Pipeline segnalazione incidenti), C7 (Sorveglianza umana e controlli).
 \end{enumerate}
 
-La quantificazione sperimentale dei cluster, la proiezione spaziale di Voronoi e le verifiche di robustezza costituiscono l'oggetto del Capitolo 4.
+La Figura~\ref{fig:catalogo_ciclo_vita_metodologia} riassume l'intero raccordo metodologico: a sinistra, l'estrazione dei 16 cluster bivariati ($\mathcal{D}_3$) e il recupero delle 54 proposizioni della Sezione~2 tramite la regola di eredità dall'Articolo~16 ($\mathcal{D}_2$, confluenti in C1); a destra, l'articolazione dei 9 componenti software lungo il ciclo chiuso delle quattro fasi operative del sistema di IA.
 
-\clearpage
+\begin{figure}[!htb]
+  \centering
+  \includegraphics[width=1.1\textwidth]{catalogo_ciclo_vita_metodologia}
+  \caption[Derivazione metodologica e architettura sul ciclo di vita dei 9 componenti]{Dalla modellazione semantica all'architettura di conformità: (a) integrazione tra clustering bivariato ($\mathcal{D}_3$) e regola di eredità strutturale sulla Sezione~2 ($\mathcal{D}_2$); (b) collocazione dei 9 componenti software (C1--C9) lungo le quattro fasi del ciclo di vita del sistema di IA.}
+  \label{fig:catalogo_ciclo_vita_metodologia}
+\end{figure}
+
+
+La quantificazione sperimentale dei cluster, la proiezione spaziale di Voronoi e le verifiche di robustezza costituiscono l'oggetto del Capitolo 4.
 
 % =============================================================================
 % CAPITOLO 4
@@ -891,7 +924,7 @@ Il test non parametrico di McNemar certifica la \textbf{perfetta parità statist
 \label{sec: risultati_semantica_topologica}
 
 \subsection{Topic Modeling con NMF e Analisi Topologica (TDA)}
-La decomposizione NMF deterministica ($k=10$, NNDSVDa) sulle \num{1171} proposizioni normative estrae 10 macro-temi latenti coesi (\cref{nmf_topics}), dominati dai requisiti tecnici per l'alto rischio (Topic 2, 242 prop.), adempimenti del fornitore (Topic 5, 146 prop.), produce di conformità (Topic 9, 133 prop.) e modelli GPAI (Topic 1, 122 prop.).
+La decomposizione NMF deterministica ($k=10$, NNDSVDa) sulle \num{1171} proposizioni normative estrae 10 macro-temi latenti coesi (\cref{tab:nmf_topics}), dominati dai requisiti tecnici per l'alto rischio (Topic 2, 242 prop.), adempimenti del fornitore (Topic 5, 146 prop.), procedure di conformità (Topic 9, 133 prop.) e modelli GPAI (Topic 1, 122 prop.).
 
 %\clearpage
 \begin{table}[htbp]
@@ -986,12 +1019,12 @@ A completamento della partizione poligonale, la \cref{fig:semantic_projection_2d
   \label{fig:semantic_projection_2d}
 \end{figure}
 
-I 16 cluster bivariati si ricompongono nel \textbf{catalogo canonico dei 9 componenti software}(\cref{tab:catalogo_componenti}), coprendo l'intero ciclo di ivta del sistema di IA: 8 componenti sono direttamente sostenuti dai cluster in lingua italiana a $k = 10$ nelle versioni EN/FR ed in italiano variando $k$.
+I 16 cluster bivariati si ricompongono nel \textbf{catalogo canonico dei 9 componenti software} (\cref{tab:catalogo_componenti}), coprendo l'intero ciclo di vita del sistema di IA: 8 componenti sono direttamente sostenuti dai cluster in lingua italiana a $k = 10$ nelle versioni EN/FR ed in italiano variando $k$.
 
 \begin{table}[htbp]
   \centering
   \small
-  \caption[Il catalogo canonico dei 9 componenti software]{Il catalogo canonico dei 9 componenti software per la conformità all'AI Act (dettaglio dei singoli cluster in Appendice~\ref{app:catalogo}).}
+  \caption[Il catalogo canonico dei 9 componenti software]{Il catalogo canonico dei 9 componenti software per la conformità all'AI Act.}
   \label{tab:catalogo_componenti}
   \begin{tabularx}{\textwidth}{l X p{3.2cm} p{2.6cm} c r}
     \toprule
@@ -1034,5 +1067,234 @@ La quantificazione algebrica del principio di autosufficienza mediante l'operato
         \item Variando $k \in [7, 14]$ su tutte le lingue, il componente C5 si isola come cluster autonomo in 21 configurazioni sulle 24 totali (emerge stabilmente per $k \in [8, 14]$ in italiano e per ogni $k \ge 7$ in EN e FR), provando così che C5 rappresenta una reale funzione architetturale e non un artefatto dovuto alla segmentazione.
     \end{itemize}
 \end{enumerate}
+
+
+\chapter{Discussioni e conclusioni}
+\label{cap:discussione}
+
+\section{Cosa significano i risultati: interpretazione critica}
+I dati sperimentali e i riscontri quantitativi esposti nel Capitolo 4 offrono una lente formale per comprendere la natura dell'AI Act. Al di là delle singole metriche algoritmiche, l'analisi congiunta della classificazione deontica, del Named Entity Recognition, della Topological Data Analysus (TDA) e della Format Concept Analysis(FCA) dischiude tre considerazioni fondamentali.
+\subsection{Asimmetria del linguaggio legislativo europeo e concezione dell'obbligo tecnico}
+Il primo riscontro concettuale scaturisce dall'appartenente debolezza del classificatore deterministico delle proposizioni normative. Come documentato dal Capitolo 4(4,2), il modulo a regole basato su verbi deontici canonici (dovere, essere tenuto a, garantisce) ottiene una precisione elevata (0,93), ma il richiamo crolla al 57\% sul campione indipendente, facendo scendere l'accuratezza complessiva al \textbf{67\%} e regalando il \textbf{72\% delle proposizioni normative alla classe residuale} \textbf{altro}.
+
+Questo fenomeno non è imputabile ad un difetto lessicale del dizionario delle regole, ma riflette una precisa e sistematica \textbf{asimmetria redazionale del legislatore europeo}:
+
+\begin{enumerate}
+    \item \textbf{L'indicativo presente performativo} : a differenza dei testi normativi di common law o dei codici penali tradizionali (fortemente basati su comandi espliciti e diretti come "shall", "must" o formule deontiche), il diritto comunitario fa un uso pervasivo dell'indicativo presente con valore descrittivo ("I registri sono conservati per un periodo minimo...", "Il sistema di gestione dei rischi comprender...").
+    \item \textbf{Lo spostamento dell'obbligo dalla persona al sistema} : nelle disposizioni a contenuto marcatamente tecnologico, l'obbligo giuridico non viene enunciato come un dovere comportamentale dell'individuo, ma questo viene "oggettivato" come una \textbf{proprietà intrinseca dello stato dell'artefatto software}. La frase ha, quindi per soggetto grammaticale il componente tecnico (i set di dati, il sistema di registrazione, l'interfaccia di controllo), ed il verbo ne descrive il comportamento atteso.
+    \begin{itemize}
+        \item Un caso è quello dell'\textbf{Articolo 12(Registrazione automatica degli eventi)}, che registra il \textbf{100\% di impersonalità} (5 proposizioni su 5 prive di attore). Il legislatore stabilisce che \textit{<<I sistemi di IA ad alto rischio consentono a livello tecnico la registrazione degli eventi (log)>>} e che \textit{<<Le capacità di registrazione consentono...>>}. L'onere non è configurato come una condotta personale, ma come un vincolo architetturale nativo (\textit{Logging by Design}) la cui titolarità giuridica viene assegnata al fornitore solo a valle tramite l'Articolo 16, e la cui conservazione spetta al Deployer ex Articolo 26.
+    \end{itemize}
+\end{enumerate}
+Sul piano dell'Ingegneria dei Requisiti (Requirement Engineering), questa constatazione sancisce l'inadeguatezza degli approcci di estrazione basati unicamente su patter deontici tradizionali. Trattare una proposizione all'indicativo come priva di valore descrittivo significherebbe escludere dall'architettura di conformità oltre la metà dei requisiti tecnici dell'atto.
+È proprio questa evidenza linguistica ad ever imposto di assumere la presenza dell'attore (\textit{has\_attore = 1}) - o il suo recupero contestuale - come cardine della derivazione architetturale, superando il filtro sintattico dell'obbligo esplicito.
+\subsection{La natura reticolare e non sequenziale della conformità}
+
+Il secondo elemento di riflessione teorica emerge dalla convergenza tra l'analisi topologica (TDA) e l'analisi formale dei concetti (FCA):
+\begin{itemize}
+     \item La filtrazione Vietoris-Rips, ha quantificato la presenza di 151 cicli \textbf{1-dimensionali persistanti} ($B_1 = 151$) a raggio intermedio, accompagnati  da una componenete che raccoglie il 93,1\% \textbf{del corpus normativo} ad appena $\epsilon = 0,80$ di distanza semantica (Cap. 4, Sezione 4,3);
+    \item L'algoritmo di Formal COncept Analysis ha generatu un \textit{Iceberg Lattice} di \textbf{91 concetti formali uniti da 177 archi}, evidenziando una densità di interconnessione $|E| / |V| \approx \num{1,95}$ articolata su 4 livelli gerarchichi guidati dalla flag \textit{has\_attore}
+\end{itemize}
+
+Questi risultati smentiscono radicalmente la concezione della compliance normativa come processo sequenziale o "a cascata" (waterfall compliance):
+\begin{itemize}
+     \item \textbf{La conformità come ipergrafo di vincoli}: l'elevatissimo numero di "buchi" semantici persistanti ($\beta_1 = 151$) certifica  che le prescrizioni dell'AI Act sono vincolate da \textbf{dipendenze circolari e mutue interazioni}. Non è possibile concepire l'adempimento dell'Articolo 10 (Data Governance) separatamente dall'Articolo 9(Risk Management), poiché la valutazione dei bias richiede modelli statistici di rischio; a loro volta, li misure di mitigazione del rischio dell'Articolo 9 dipendono dalla tracciabilità garantita dai registri dell'Articolo 12(Logging), i quali devono essere strutturati per consentire la sorveglianza umana prevista dall'Articolo 14 (Human Oversight), confluendo infine nella documentazione tecnica unitaria dell'Articolo 11 e dell'Allegato IV.
+    \item \textbf{Il principio della non-linearità dell'AI-Compliance}: in un'architettura software, qualisasi modifica apportata a un sottosistema critico (ad esempio, l'aggiornamento dei pesi di un modello o la reindicizzazione dei log) non produce un effetto localizzato, ma riverbera lungo tutto il reticolo concettuale. La conformità dell'AI Act deve pertanto essere modellata come un \textbf{sistema di invarianti software mutuamente coordinate}, gestite mediante meccanismi di orchestrazione centralizzata o contratti di interfaccia rigorosi.
+\end{itemize}
+
+\subsection{Epistemologia del confronto simbolico-neurale nel Legal NLP}
+Il Confronto empirico condotto in risposta alla domanda di ricerca {$\mathcal{D}_1$} sancisce la parità statistica tra il sistema basato su espressioni regolari e gazetteer calibrati (Rules v2, F1 = 0,954) e il modello linguistico pre-addestrato di dominio(\textit{Italian-Legal-BERT v2}, \textit{F1=0,953}), confermata dal test non parametrico di McNemar sia sul campione aggregato (p = 0,727) sia sul quarto round cieco indipendente ( p = 1,000).
+
+Questo riscontro solleva una questione metodologica centrale: se un sistema simbolico deterministico e computazionale leggero ottiene prestazioni equivalenti ad una rete neurale da 110 milioni di parametri, quale valore ha appportato l'integrazione e la valutazione di Legal-BERT nell'architettura della ricerca?.
+
+La risposta si articola su cinque pilastri metodologici e scientifici:
+\begin{enumerate}
+    \item \textbf{L'obbligo metodologico del confronto con lo Stato dell'Arte}
+    In una ricerca accademica avanzata, proporre un'architettura di estrazione basata su regole ad hoc senza confrontarla con i modelli linguistici pre-addestrati di dominio (Italian-Legal-BERT, Licari e Comandè, 2022 \cite{licari2022italianlegalbert}; LEGAL-BERT, Chalkidis et al., 2020 \cite{chalkidis2020legalbert}) avrebbe costituito una debolezza metodologica inaccettabile. Il collasso della baseline generalista di spaCy (F1 = 0,258) ha provato inconfutabilmente che i modelli standard per il linguaggio comune falliscono sul gergo legislativo; perciò era doveroso verificare sperimentalmente se i modelli Transformer dedicati al diritto potessero superare la modellazione simbolica.
+    \item \textbf{Il ruolo diagnostico di Legal-BERT nella calibrazione delle regole: la genesi di Rules v2}
+    Le elevate prestazioni di Rules v2 non rappresentano una condizione iniziale spontanea, ma il punto di arrivo di un processo iterativo guidato dall'interazione con la rete neurale. Nella quale la prima stesura (Rules v1), il gazetteer soffriva di lacune sintattiche che ne facevano crollare l'accuratezza a \texttt{F1 = 0,77} nel secondo round cieco. È stata unicamente la disamina delle discordanze e l'analisi dei \textbf{44 errori comuni} condivisi tra regole e Legal-BERT a consentire all'ingegnere della conoscenza di isolare i quattro difetti strutturali:
+    \begin{itemize}
+        \item il troncamento delle citazioni normative composite contenenti virgole intermedie («regolamento (UE) n, 575/2013»);
+        \item la mancata cattura dei rinvii anaforici contestuali («presente articolo»);
+        \item le forme plurali coordinate degli allegati («allegati IV e VIII»);
+        \item la delimitazione incompleta dei sintagmi complessi designanti le autorità («consiglio per l'IA»).
+    \end{itemize}
+
+Inoltre, Legal-BERT ha operato come un rilevatore di rumore (denoiser): 4 delle apparenti vittorie del modello neurale ricadevano all'interno delle note a piè di pagina bibliografiche erroneamente annidate nell'Articolo 113. Il modello linguistico ha agito da \textbf{debugger cognitivo}: senza una controlarte neurale che interpolava liberamente il contesto semantico evidenziando la rigidità del parser simbolico, tali errori sistematici sarebbero rimasti silenti.
+
+
+\item \textbf{Il limite teorico della Weak Supervision ("il paradosso maestro–allievo")}
+Dal punto di vista dell'Apprendimento Automatico, l'esperimento offre una nitida dimostrazione del limite teorico intrinseco al paradigma della \textit{Weak Supervision} (Ratner et al., 2017 \cite{ratner2017snorkel}):
+\begin{itemize}
+    \item Addestrato debolmente sulle silver labels generate dalle regole v1, Legal-BERT ha assimilato e generalizzato le imperfezioni del suo stesso supervisore: nel \textbf{75\% dei casi di errore comune(33 su 44)}, BERT produceva esattamente la medesima predizione errata delle regole;
+    \item Sanate le regole (v2) e fornite nuove silver label qualitative, BERT ha scalato le sue predizioni (passando da 0,88 a 0,953), riallineandosi al maestro.
+\end{itemize}
+L'esito del test di McNemar evidenzia l'esistenza di un limite prestazionale intrinseco (upper bound): in un dominio formale a sintassi prescrittiva, un modello neurale addestrato unicamente mediante etichette deboli non può superare il livello di accuratezza del generatore simbolico da cui apprende.
+
+\item \textbf{ Il collasso della Strong Supervision su campioni realistici di singolo atto normativo}
+L'esperimento di controllo condotto con Validazione Incrociata a 5 parti (Capitolo 4, Tabella 4.3) ha confutato definitivamente la congettura secondo cui il mancato primato di BERT dipendesse dall'uso delle silver labels. Addestrato con supervisione forte unicamente sulle 309 proposizioni annotate a mano (591 entità gold, corrispondenti al 26\% del corpus normativo), il modello neurale è crollato di \texttt{F1 = 0,821} ( p<0,001).
+
+I modelli Transformer possiedono oltre 110 milioni di parametri liberi: per convergere senza memorizzare acriticamente  necessitano di decine o centinaia di migliaia di campioni. Su un singolo atto legislativo (composto da 1172 proposizioni normative), l'annotazione esaustiva manuale è insostenibile e numericamente insufficiente per \textit{training from scratch}. La supervisione debile ha rappresentato l'unico canale praticabile per istruire la rete; tuttavia, nemmeno l'approccio ibrido (silver pre-training + fine-tuning umano, F1 = 0,940) ha superato la baseline deterministica a regole (0,946). Questo risultato stabilisce un canone operativo per il \textit{Legal Engineering}: \textbf{su compiti di estrazione circoscritti a singoli testi normativi chiusi, i sistemi simbolici ben calibrati offrono un rapporto costi/benefici, un determinismo ed una accuratezza superiori a qualsiasi modello neurale supervisionato}.
+
+
+\item \textbf{Scalabilità transfrontaliera e invarianza concettuale}
+Infine, l'infrastruttura neurale si è rivelata indispensabile per la validazione di robustezza e multilinguismo: mentre le regole richiedono una riscrittura manuale della sintassi per ogni nuova lingua, i modelli di lingua Transformer multilingue o di dominio esteso (LEGAL-BERT in inglese, JuriBERT in francese) forniscono un percorso scalabile e immediato per elaborare il testo nelle 24 lingue ufficiali dell'Unione Europea, garantendo l'invarianza ontologica dell'architettura di conformità.
+\end{enumerate}
+
+
+\section{Impatto sull'utilizzo dell'AI Act e Principi di Design Software}
+La traduzione bottom-up del testo dell'AI Act in un catalogo strutturato di requisiti operativi produce un impatto trasformativo sia sui processi di audit e gestione della conformità aziendale, sia sulla progettazione ingegneristica dei sistemi software basati sull'intelligenza artificiale
+
+\subsection{Impatto operativo della pipeline di conformità}
+\label{sec:impatto_operativo_pipeline}
+
+
+Oggi, l'adeguamento normativo a un quadro complesso come l'AI Act viene prevalentemente affrontato mediante consulenze legali manuali. Tale approccio presenta tre criticità strutturali che la pipeline computazionale sviluppata consente di superare:
+
+\begin{enumerate}
+  \item \textbf{Abbattimento di tempi e costi di audit}: un'analisi manuale condotta da giuristi ed esperti di conformità richiede tipicamente centinaia di ore di lavoro e comporta costi stimabili nell'ordine di decine o centinaia di migliaia di euro per singolo sistema. La pipeline automatizza la segmentazione proposizionale, l'indicizzazione concettuale e l'estrazione degli obblighi per ciascun attore in pochi minuti di calcolo deterministico, riducendo l'onere umano alla sola supervisione dei casi limite e alla convalida architetturale;
+  
+  \item \textbf{Eliminazione del divario cognitivo tra uffici legali e team di sviluppo}: storicamente, i pareri legali sono redatti in prosa discorsiva e formulazioni aperte, trasferendo sui progettisti software l'onere arbitrario di tradurli in specifiche tecniche. Il catalogo dei 9 componenti colma questa frattura: ogni componente fornisce ai \emph{software architect} un perimetro funzionale esplicito (\emph{cosa implementare, per quale attore giuridico e in quale fase del ciclo di vita del sistema});
+  
+  \item \textbf{Tracciabilità rigorosa e verificabilità tecnica}: la mappatura deterministica stabilita tra proposizioni atomiche, cluster tematici e componenti software garantisce una tracciabilità bidirezionale completa (\emph{end-to-end traceability}). A fronte di un'ispezione o di una verifica di conformità da parte delle autorità di vigilanza, l'organizzazione può esibire per ciascun modulo software la catena ininterrotta di requisiti formali che risale direttamente agli articoli e ai commi della Gazzetta Ufficiale.
+\end{enumerate}
+
+\subsection{I quattro principi architetutrali di AI-Compliance by Design}
+Dalla distillazione dei 9 componenti canonici e dalle proprietà topologiche dell'atto normativo emergono \textbf{quattro principi architetturali guida} che devono informare l'ingegneria del software moderno per sistemi di inteligenza artificiale (AI-Compliance by Design):
+\begin{enumerate}
+    \item \textbf{Principio 1: Auditabiliy and Continuous Logging by Design (Art. 12 e 26)}
+    La conformità non può essere documentata a posteriori mediante report descrittivi: deve essere provata mediante registri operativi generati a runtime dal software.
+    \begin{itemize}
+        \item Vincolo architetturale: i meccanismi di logging per sistemi ad alto rischio non devono limitarsi a catturare eccezioni o tracciati di errore applicativo (\emph{application telemetry}), ma devono registrare in modo continuativo, automatico e deterministico l'intero flusso operativo: gli input forniti dal deployer, l'output generato dall'algoritmo, la versione esatta dei pesi e del software in esecuzione, e l'identificativo degli operatori umani coinvolti nella catena decisionale;
+        \item Prescrizione tecnica: l'architettura deve garantire l'integrità e l'immutabilità dei registri(mediante pattern \emph{Appens-Only}, firme digitali crittografiche o partizioni storage \emph{Write-Once-Read-Many }-- WORM, assicurando per progettazione un periodo di ritenzione e conservazione minima di \textbf{almeno sei mesi} (Articolo 26, comma 6) senza possibilità di alterazione retroattiva.
+    \end{itemize}
+    \item \textbf{Principio 2: Structural Human-in-the-Loop(Art. 14)}
+    La sorveglianza umana (\emph{human oversight}) non può ridursi a una dashboard di notifica passiva o a una spunta contrattuale disattesa nella pratica.
+
+    \begin{itemize}
+        \item Vincolo architetturale: le capacità di supervisione umana devoe costituire un blocco funzionale attivo e integrante del flusso di controllo dsel software (\emph{control-flow}). Il sistema deve essere architetturalmente programmato per impedire il completamento di un'operazione ad alto rischio in assenza di convalida umana (\emph{two-man rule} o approvazione esplicita), ogniqualcolta il modello operi con livelli di confidenza statistica inferiori a soglie prefissate o rilevi anomalie distribuzionali nei dati;
+        \item Prescizione tecnica; il software deve esporre interfacce native di arresto immediato (\emph{kill-switch}) e meccanismi di sovrascrittura (\emph{manual override}), progettati per consentire all'operatore di interrompere l'esecuzione in qualsiasi istante e far collassare il sistema in uno stato sicuro, prevedibile e reversibile(\emph{fail-safe state}), azzerando gli effetti operativi delle inferenze errate.
+    \end{itemize}
+
+    \item \textbf{Continuous Data Hygiene and Bias Mitigation (Art. 10)}
+    La correttezza e la qualità dei dati di addestramento non possono essere considerate come un collaudo statico certificato una volta per tutte prima del rilascio
+    \begin{itemize}
+        \item Vincolo architetturale: come imposto dai requisiti della Sezione 2, l'architettura software deve integrare una pipeline continua di \emph{data governance} attiva lungo l'intero ciclo di vita(dalla raccolta dei dati grazzi al deployement e re-training continuo);
+        \item Prescrizione tecnica: la pipeline MLOps devono includere moduli automatici di validazione statistica per verificare sistematicamente la rappresentatività, l'adeguatezza e l'assenza di distorsioni statistiche (bias), rispetto a categorie demografiche o protette. Il sistema deve monitorare a runtime la deriva distributiva dei dati in ingrresso (\emph{data drift}) e la deriva concettuale delle predizioni (\emph{concept drift}), innescando allarmi architetturali e bloccando l'erogazione dei servizi qualora i dati d'esercizio divergano dalle assunzioni di validazione originarie.
+    \end{itemize}
+
+    \item \textbf{Principio 4 : Disaccoppiamento Architetturale dei Vincoli Fornitore / Deployer (Artt. 16 e 26)}
+
+    La catena del valore dell'IA richiede una rigorosa separazione delle responsabilità tra il soggetto che progetta il modello (\textit{fornitore}) e l'organizzazione che lo adotta nel proprio flusso di lavoro(\textit{deployer})
+    \begin{itemize}
+        \item Vincolo architetturale: il software deve strutturarsi secondo un modello a strati fortementedisaccoppiato mediante interfacce(\textit{API contract}) rigorosamente definite;
+        \item Prescrizione tecnica: il modulo software rilasciato dal dal fornitore deve incapsulare le garanzie intrinseche (metriche di accuratezza, robustezza alla corruzione dei dati, documentazione tecnica machine-readable ex Art. 11, formati di log standardizzati); a sua volta l'infrastruttura del deployer deve avvolgere il modello all'interno di un'architettura a guardrail (\emph{wrapper architecture}) che verifichi preliminarmente la pertinenza dei dati di input rispetto alle istruzioni d0uso fornite dal produttore (Art. 26, comma 1), gestendo localmente i registri di conformità e la sicurezza operativa nel contesto applicativo specifico.
+    \end{itemize}
+\end{enumerate}
+
+
+
+\section{Minacce alla validità (Threats to Validity)}
+A salvaguardia del rigore accademico e della riproducibilità scientifica della tesi, si analizzano sistematicamente le minacce alla validità che potrebbero inficiare dello studio, seguendo la tassonomia consolidata per l'Ingegneria del Software proposta da Wohlin et al. (2012) \cite{wohlin2012experimentation}.
+
+\subsection{Validità interna e di costrutto}
+La validità interna riguarda il grado in cui le relazioni causali osservate riflettono fedelmente il fenomeno analizzato, escludendo l'interferenza di fattori spuri o errori di progettazione sperimentale. La validità di costrutto valuta se i test e le metriche misurino effettivamente i concetti teorici prefissati
+
+\begin{itemize}
+    \item \textbf{Il rischio dell'adattamento circolare (Overfitting delle regole sul test set):}
+    \begin{itemize}
+        \item Minaccia: durante le prime fasi di sviluppo del classificatore di obbligo e rischio , si è registrata un'accuratezza apparente prossima al 100\% (98,27\% su \texttt{tipo\_obbligo}). L'ispezione metodologica ha evidenziato che l'ingengere della conoscenza aveva esteso il dizionario dei verbi deontici basandosi sulle frasi di quello stesso campione di prova (il 43\% degli obblighi era catturato da pattern aggiunti a posteriori).
+        \item Mitigazione: la stima circolare è stata scartata. È stato istituito un protocollo di validazione cieca e indipendente su 49 proposizioni non viste, con regole rigorosamente congelate prima dell'inizio delle misurazioni. La discesa dell'accuratezza al 67\% (e del richiamo a 0,57) certifica l'autenticità e l'onesta metodologica del risultato non distorto.
+    \end{itemize}
+    \item \textbf{Il bias di ancoraggio cognitivo nell'annotazione del ground truth:}
+    \begin{itemize}
+        \item Minaccia: nel primo round di validazione del Named Entity Recognition, l'annotatore visualizzava le predizioni prodotte dal sistema a regole (Round 1 semi-automatico, $F_1 = \num{0,86}$). La letteratura evidenzia che l'essere umano tende ad accettare passivamente i suggerimenti algoritmici, incorrendo in un grave bias di conferma.
+        \item Mitigazione: il pericolo è stato smascherato nel Round 2, dove un'annotazione alla cieca sul testo puro ha fatto crollare le regole a $F_1 = \num{0,77}$. Il protocollo sperimentale è stato quindi rifondato su \textbf{quattro round ciechi successivi}, in ciascuno dei quali l'annotatore operava sul testo grezzo senza alcun ausilio algoritmico, congelando le espressioni regolari prima di testarle su lotti sequenziali e indipendenti di testo nuovo.
+    \end{itemize}
+
+    \item \textbf{L'instabilità stocastica dell'indice NMF e il rischio di rotture silenziose:}
+    \begin{itemize}
+        \item Minaccia: la Non-negative Matrix Factorization è un algoritmo di ottimizzazione numerica che non preserva l'ordinamento ordinale delle dimensioni latenti (\texttt{topic\_0}, \texttt{topic\_1}, ecc.) a fronte di variazioni, anche minime, del corpus documentale. Quando il dataset è stato ripulito dal paratesto dell'Articolo 113, l'esecuzione del modello ha comportato una permutazione degli indici numerici dei topic, provocando una rottura silenziosa (\emph{silent failure}) in cui 4 componenti su 8 risultavano temporaneamente privi di cluster di supporto.
+        \item Mitigazione: sul piano dell'Ingegneria dei Dati, l'accoppiamento rigido basato su indici ordinali è stato sostituito da un ancoraggio concettuale fondato sulla similarità lessicale delle parole chiave (\emph{top-words}) e presidiato da \textbf{asserzioni a runtime} (\texttt{assert len(component\_clusters) >= 16}) che interrompono immediatamente la pipeline in caso di derive stocastiche.
+    \end{itemize}
+    
+\end{itemize}
+
+\subsection{Validità esterna e generalizzabilità}
+La validità esterna misura la possibilità di generalizzare la metodologia e le scoperte della tesi al di fuori del perimetro specifico dell'AI Act.
+\begin{enumerate}
+    \item \textbf{Generalizzabilità ad altri quadri normativi dell'Unione Europea:}
+    \begin{itemize}
+    \item \texttt{Valutazione:} la pipeline metodologica (segmentazione proposizionale, classificazione deontica, NER simbolico/neurale, TDA e reticoli FCA) è stata concepita per sfruttare lo stile redazionale codificato della Gazzetta Ufficiale dell'Unione Europea. Di conseguenza, l'approccio è teoricamente esportabile ad altri grandi regolamenti digitali comunitari, quali il \textbf{GDPR (Reg. UE \num{2016}/679)}, il \textbf{Data Act (Reg. UE \num{2023}/2854)}, la \textbf{Direttiva NIS2 (Dir. UE \num{2022}/2555)} e il \textbf{Cyber Resilience Act}.
+    \item \texttt{Limiti di trasferibilità:} ciascun testo presenta specificità strutturali. Mentre l'AI Act è caratterizzato da una massiccia concentrazione di requisiti tecnici impersonali (Sezione 2), il GDPR presenta una struttura basata su soggetti giuridici più chiaramente esplicitati (titolare del trattamento, responsabile, interessato). Il trasferimento ad altri atti richiederà pertanto la ricalibrazione del dizionario delle entità e l'adattamento delle regole di eredità sintattica.
+\end{itemize}
+    \item \textbf{Invarianza linguistica transfrontaliera:}
+    \begin{itemize}
+        \item \texttt{Valutazione}: l'esperimento multilingue condotto sui testi ufficiali in lingua inglese e francese (Capitolo 4, Sezione 4.4) ha confermato che l'architettura dei cluster e i componenti software primari rimangono stabili (18 cluster sopra soglia in EN e FR, con emersione spontanea del componente C5). Ciò attesta che le strutture estratte non sono artefatti idiosicratici della lingua italiana, ma riflettono l'ontologia concettuale autentica concepita dal legislatore europeo. 
+    \end{itemize}
+    
+\end{enumerate}
+\subsection{Punti ciechi normativi e limiti dell'astrazione computazionale}
+Ogni modello formale costituisce un'astrazione semplificata della realtà; nel contesto della presente tesi si evidenziano due punti ciechi principali:
+\begin{enumerate}
+    \item \texttt{Il regime impersonale della Sezione 2 e il limite dell'estrazione locale}:
+    \begin{itemize}
+        \item L'impersonalità linguistica dell'intera Sezione 2 del Capo III (Articoli 8-15) --culminante nel 90\% do assemza do attore nell'Articolo 10 e nel 100\% nell'Articolo 12 -- dimopstra che il limite intrinseco delle tecniche NLP puramente orizzontali e locali. Un estrattore che analizza la singola proposizione isolata fallisce inevitabilmente nel cogliere che l'Articolo 16 assegna retroattivamente l'intera responsabilità al "fornitore".
+        \item Sebbene la regola euristica di eredità a blocco di sezione abbia recuperato 54 proposizioni con un'accuratezza del 96,3\% (52/54), essa rappresenta una soluzione ingegneristica supervisionata dall'esperto di dominio, evidenziando che l'analisi automatica del diritto non può prescindere da una compressione della macro-architettura del testo giuridico.
+    \end{itemize}
+    \item \texttt{La granularità proposizionale rispetto alla clausola sintattica}:
+    \begin{itemize}
+        \item La scelta metodologica di segmentazione il testo a livello di proposizione atomica (mediante punteggiatura forte e punti elenco) anziché a livello di singola clausola subordinata o coordinate brevi preserva l'integrità del contesto semantico. Tuttavia, nei commi particolarmente densi, lascia compresenti obblighi multipli coordinati all'interno dello stesso record, introducendo un lieve fattore di sovrapposizione tra classi deontiche.
+    \end{itemize}
+\end{enumerate}
+
+
+\section{Conclusioni e sviluppi futuri}
+Il presente lavoro di tesi definisce e valida una metodologia computazionale volta a colmare il divario tra il dettato normativo dell'AI Act (Regolamento UE 2024/1689) e la progettazione delle architetture software, delineando un percorso rigoroso per derivare requisiti tecnici direttamente dal testo di legge (\emph{AI-Compliance by Design})
+
+\subsection{Sintesi dei contributi del lavoro}
+I risultati e i contributi conseguiti nel presente lavoro si articolano su tre dimensioni principali:
+\begin{enumerate}
+    \item \textbf{Contributo metodologico di Legal Engineering}:
+    \begin{itemize}
+        \item Progettazione e formalizzazione di una pipeline computazionale end-to-end, riproducibile e strutturate secondo le fasi del modello di processo industriale CRISP-DM;
+        \item Dimostrazione empirica dell'importanza di adottare protocolli di validazione rigorosamente ciechi e a regole congelate (test su campioni indipendenti e a 4 round sequenziali per il NER), documentando come procedure semi-automatiche e non indipendenti indicano un forte bias di ancoraggio cognitivo e stime ingannevoli di accuratezza;
+        \item Chiarimento sperimentale del rapporto tra sistemi simbolici e modelli linguistici di dominio (Italian-Legal-BERT): dimostrazione che un singolo atto legislativo a vocabolario chiuso le regole sintattiche ben calibrate eguagliano le reti neurali (p=0,727, parità statistica confermata dal test di McNemar), e identificazione del limite intrinseco della weak supervision ("paradosso maestro-allievo"), in cui la rete neurale replica ed eredità le imperfezioni del generatore euristico.
+    \end{itemize}
+    \item \textbf{Contributo analitico ed empirico sull'AI Act}:
+    \begin{itemize}
+        \item Segmentazione deterministica del Regolamento UE 2024/1689 in 1.775 propozioni atomiche (di cui 1.172 a rilevanza normativa diretta e 1.171 analizzate nei modelli computazionali);
+        \item Mappatura semantica dei 10 macro-temi latenti mediante fattorizzazione non negativa delle matrici (NMF);
+        \item Caratterizzazione topologica con Vietoris-Rips, che evidenzia la presenza di una componente gigante connessa già a $\epsilon = 0,0897$ (93,1\% del corpus) e quantifica 151 cicli semantici persistenti ($\beta_1 = 151$ a $\epsilon = 0,1053$), dimostrando la natura reticolare e non lineare delle interdipendenza normative;
+        \item Modellazione algebrica della struttura concettuale mediante Analisi Formale dei Concetti (reticolo Iceberg di 91 concetti formali e 177 relazioni di sussunzione su 4 livelli gerarchici), provando il ruolo di perno strutturante della presenza dell'attore giuridico (\texttt{has\_attore})
+    \end{itemize}
+    \item \textbf{Contributo architetturale e applicativo}:
+    \begin{itemize}
+        \item Derivazione \textit{bottom-up} del primo catalogo formale di \textbf{9 componenti software per l'AI-Compliance}, distribuiti lungo le fasi del ciclo di vita del sistema e ancorati oggettivamente a 16 cluster bivariati (Attore x Topic);
+        \item Risoluzione del punto cieco dell'Articolo 10 e dell'impersonalità della Sezione 2 mediante la regola formale di eredità di sezione dell'Articolo 16 (con un'accuratezza del 96,3\% su 54 proposizioni recuperate ed espansione del componente C1 da 60 a 101 proposizioni),
+        \item Formalizzazione di \textbf{quattro principi architetturali guida di AI-Compliance by Design} (Continuous Logging, Strucrural Human-in-the-Loop, Data Hygiene, Regulatory Telemetry), per orientare la concreta progettazione ingegneristica di sistemi di intelligenza artificiale conformi.
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Limiti metodologici dichiarati}
+Nel rispetto del rigore scientifico, si dichiarano i limiti intrineci al perimetro del presente lavoro:
+\begin{itemize}
+    \item \textbf{Annotazione a singolo operatore}: i campioni di controllo e di validazione (\textit{gold standard}) sono stati annotati manualmente. Sebbene l'adozione di un protocollo a round ciechi sequenziali abbia neutralizzato il bias di conferma, non è stato possibile calcolare un coefficiente di accordo inter-annotazione formale (Cohen's Kappa) con esperti giuridici indipendenti;
+    \item \textbf{Risoluzione parziale dei rinvii normativi esterni}: il modulo di Named Entity Recognition raggiunge un richiamo del 81\% sui riferimenti normativi; una frazione delle citazioni complesse verso normative comunitarie esterne (quali i regolamenti sui dispositivi medici o la legislazione di armonizzazione tecnica) rimane non completamente disambiguata a livelli di singolo comma;
+    \item \textbf{Perimetro limitato alle specifiche architetturali}: il lavoro definisce rigorosamente i requisiti funzionali, le matrici di tracciabilità e i vincoli architetturali dei 9 componenti software , ma non include l'implementazione del codice sorgente di un prototipo software funzionante a microservizi.
+\end{itemize}
+
+
+\subsection{Sviluppi futuri}
+La metodologia e gli strumenti sviluppati aprono diverse direttrici di estensione:
+\begin{enumerate}
+    \item \textbf{Costruzione di un Knowledge Graph multiregolamentare}: estendere la pipeline di parsing ed estrazione concettuale agli altri quadri normativi della Unione Europea per il digitale (GDPR, Data Act, Direttiva NIS2, Cyber Resilience Act), risolvendo le dipendenze e i rinvii incrociati per costruire un grafo della conoscenza integrato della compliance digitale europea;
+    \item \textbf{Supporto all'ingegneria dei requisiti tramite LLM}: valutare l'impiego controllato di modelli linguistici generativi dotati di capacità di ragionamento (\textit{reasoning models}) per assistere l'ingegnere del software nella generazione automatica di scenari di test di conformità architetturale a partire dai vincoli estratti;
+    \item \textbf{Prototipazione modulare e sperimentazione in Sandbox regolamentari}: tradurre le specifiche dei 9 componenti software in una suite di servizi applicativi modulari (quali motori di audit logging crittografico conformi all'Art. 12 o interfacce di integrazione per la banca dati UE ex Art.71), valutandone l'operatività all'interno delle sperimentazioni controllate (regulatoru sandboxes) previste dalle autorità nazionali competenti
+\end{enumerate}
+
+
+\clearpage
+\printbibliography[heading=bibintoc, title={Bibliografia}]
 
 \end{document}

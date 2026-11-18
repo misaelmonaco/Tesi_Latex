@@ -766,10 +766,10 @@ La derivazione di requisiti architetturali da un atto normativo orizzontale rich
     \centering
     \includegraphics[width=0.8\linewidth]{figure/pipeline_architettura.png}
     \caption[Architettura complessiva della pipeline computazionale]{Architettura tecnica end-to-end della pipeline computazionale a 5 livelli, con evidenziazione dei flussi di elaborazione e della collocazione delle tre domande di ricerca ($\mathcal{D}_1, \mathcal{D}_2, \mathcal{D}_3$).}
-    \label{fig:placeholder}
+    \label{fig:pipeline_architettura}
 \end{figure}
 
-Il flusso informativo attraversa cinque stadi integrati:
+Come illustrato nella Figura ~\ref{fig:pipeline_architettura}, il flusso informativo attraversa cinque stadi integrati:
 \begin{enumerate}
     \item \textbf{Livello 1 --- Ingestione e Pre-processing}: acquisizione del testo HTML da EUR-Lex, disaccoppiamento degli allegati tecnici, rimozione del paratesto ed esecuzione della segmentazione in proposizioni atomiche;
     \item \textbf{Livello 2 --- Doppio binario NLP}: classificazione deterministica di categorie deontiche e livelli di rischio, affiancata dal Named Entity Recognition duale (\emph{Rules v2} vs \emph{Italian-Legal-BERT}), snodo in cui si colloca la domanda \textbf{$\mathcal{D}_1$};
@@ -977,7 +977,7 @@ Il contesto formale è una tripla $\mathbb{K} = (G, M, I)$, dove:
     \item $I \subseteq G \times M$ è la relazione binaria indicante il possesso dell'attributo da parte della proposizione.
 \end{itemize}
 
-La Figura~\ref{fig:fca_metodologia} sintetizza i due passaggi algebrici: nel pannello (a), la connessione di Galois isolanella matrice di incidenza $I \subseteq G \times M$ un rettangolo massimale chiuso corrispondente al concetto formale $(A, B)$, dove l'estensione di $A = B'$ raccoglie le proposizioni che condividono esattamente lo stesso significato $B = A'$; nel pannello ~(b)m ka rekazuibe d'ordina parziale $(A_1, B_1) \le (A_2, B_2)$ organizza i concetti nel diagramma di Hasse per specificità crescente dall'alto verso il basso, mentre la soglia di supporto $\text{minsup} \ge 80$ porta la coda combinatoria ($3.696$ concetti) preservando i $91$ concetti strutturali dell'\emph{Iceberg Lattice}.
+La Figura~\ref{fig:fca_metodologia} sintetizza i due passaggi algebrici: nel pannello~(a), la connessione di Galois isola nella matrice di incidenza $I \subseteq G \times M$ un rettangolo massimale chiuso corrispondente al concetto formale $(A, B)$, dove l'estensione $A = B'$ raccoglie le proposizioni che condividono esattamente lo stesso insieme di attributi $B = A'$; nel pannello~(b), la relazione d'ordine parziale $(A_1, B_1) \le (A_2, B_2)$ organizza i concetti nel diagramma di Hasse per specificità crescente dall'alto verso il basso, mentre la soglia di supporto $\text{minsup} \ge 80$ pota la coda combinatoria ($3.696$ concetti) preservando i $91$ concetti strutturali dell'\emph{Iceberg Lattice}.
 
 
 \begin{figure} [!htb]
@@ -1210,7 +1210,22 @@ L'omologia persistente (Vietoris-Rips in $\mathbb{R}^{10}$, metrica del coseno, 
 
 \subsection{Rappresentazione concettuale mediante FCA}
 \label{sec:risultati_fca}
-La Formal Concept Analysis sulla matrice binaria $1171 \times70$ (densità \SI{8,2}{\percent}) produce mediante \emph{Nex Closure} un reticolo globale di \num{3696} concetti formali e \num{12576} archi. L'estrazione dell'\emph{Iceberg Lattice} (supporto $\ge 80$ proposizioni, $\approx \SI{7}{\percent}$) isola \textbf{91 concetti formali e 177 formali e 177 archi} su 4 livelli di sussunzione. Il concetto cardine di Livelo 1 è proprio \campo{has_attore} (549 proposizioni attive), confermando sul piano algebrico che l'attore giuricico costituisce il discriminante primario per strutturare la conformità.
+La Formal Concept Analysis sulla matrice binaria $1172 \times 70$ (densità \SI{8,2}{\percent}) produce mediante l'algoritmo \emph{Next Closure} un reticolo globale di \num{3696} concetti formali e \num{12576} archi. L'estrazione dell' \emph{Iceberg Lattice}  (supporto minimo $\ge 80$ proposizioni, pari a circa il \SI{7}{\percent} del corpus) isola \textbf{91 concetti formali strutturali e 177 archi di sussunzione}, rappresentati nel diagramma di Hasse della \cref{fig:fca_lattice}
+
+
+La lettura stratificata del reticolo (\cref{fig:fca_lattice}) rivela l'architettura gerarchica dell'AI Act lungo quattro livelli di specializzazione sotto la radice universale (\emph{Livello~0: Top}, \num{1171} proposizioni):
+
+\begin{itemize}
+    \item \textbf{Livello 1 (15 concetti a singolo attributo)}: costituisce la dorsale portante dell'atto, guidata dai tre macro-indicatori strutturali \campo{altro} (880 prop.), \campo{has_autorita} (604 prop.) e soprattutto \campo{has_attore} (549 prop. attive), affiancati dall'attore primario \campo{fornitore} (275 prop.) e dal tema dominante dell'alto rischio \campo{topic_2} (242 prop.);
+    \item \textbf{Livello 2 (37 intersezioni binarie)}: cattura l'accoppiamento diretto tra ruoli giuridici, classi deontiche e temi (tra cui spiccano i nodi \texttt{has\_attore + altro} con 437 prop., \texttt{has\_rif\_norm + altro} con 385 prop. e \texttt{has\_attore + fornitore} con 275 prop.), dimostrando come gli obblighi tecnici si innestino sistematicamente su proposizioni descrittive all'indicativo;
+    \item \textbf{Livelli 3 e 4 (30 intersezioni ternarie e 7 quaternarie)}: isolano i nuclei normativi ad alta specificità in cui attore, tema NMF, livello di rischio e rinvii normativi convergono simultaneamente, fornendo la base algebrica per la successiva derivazione dei componenti software.
+\end{itemize}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=\textwidth]{figure/fca_lattice.png}
+  \caption[Iceberg Concept Lattice dell'AI Act (Formal Concept Analysis)]{Diagramma di Hasse dell'\emph{Iceberg Concept Lattice} dell'AI Act ($\text{minsup} \ge 80$ proposizioni): la stratificazione su 4 livelli sotto la radice universale evidenzia il ruolo di perno strutturante del nodo \texttt{has\_attore} (549 proposizioni) e la ramificazione progressiva verso le intersezioni binarie, ternarie e quaternarie.}
+  \label{fig:fca_lattice}
+\end{figure}
 
 %______
 
@@ -1218,9 +1233,9 @@ La Formal Concept Analysis sulla matrice binaria $1171 \times70$ (densità \SI{8
 \label{sec:risultati_componenti_stabilità}
 
 \subsection{Derivazione dei 16 cluster bivariati e catalogo dei 9 componenti software} 
-L'intersezione tra i 10 topix e gli 8 ruoli normativo genera una matrice con 16 celle sopra la soglia minima di coesione ($n \ge 85$ proposizioni), che raggruppano 481 proposizioni a forte specializzazione funzionale.
+L'intersezione tra i 10 topic e gli 8 ruoli normativo genera una matrice con 16 celle sopra la soglia minima di coesione ($n \ge 8$ proposizioni), che raggruppano 481 proposizioni a forte specializzazione funzionale.
 
-La \cref{fig:cluster_derivazione} mostra in modo integrato la proiezione diplice dei cluster: a sinistra \textbf{Heatmap $8 \times 10$} che isola le 16 celle sopra-soglia documentando l'asimmetria del carico regolatorio sul fornitore; a destra la corrispondente \textbf{tassellazione geometrica di Voronoi}, che omdella lo spazio continuo dei requisiti normativi definendo i bacini poligonali di competenza funzionale.
+La \cref{fig:cluster_derivazione} mostra in modo integrato la proiezione duplice dei cluster: a sinistra \textbf{Heatmap $8 \times 10$} che isola le 16 celle sopra-soglia documentando l'asimmetria del carico regolatorio sul fornitore; a destra la corrispondente \textbf{tassellazione geometrica di Voronoi}, che modella lo spazio continuo dei requisiti normativi definendo i bacini poligonali di competenza funzionale.
 
 \begin{figure}[htbp]
   \centering
@@ -1250,8 +1265,7 @@ A completamento della partizione poligonale, la \cref{fig:semantic_projection_2d
   \label{fig:semantic_projection_2d}
 \end{figure}
 
-I 16 cluster bivariati si ricompongono nel \textbf{catalogo canonico dei 9 componenti software} (\cref{tab:catalogo_componenti}), coprendo l'intero ciclo di vita del sistema di IA: 8 componenti sono direttamente sostenuti dai cluster in lingua italiana a $k = 10$ nelle versioni EN/FR ed in italiano variando $k$.
-
+I 16 cluster bivariati si ricompongono nel \textbf{catalogo canonico dei 9 componenti software} (\cref{tab:catalogo_componenti}), coprendo l'intero ciclo di vita del sistema di IA: 8 componenti sono direttamente sostenuti dai cluster in lingua italiana a $k = 10$, mentre C5 emerge nelle versioni EN/FR e in italiano variando $k$.
 \begin{table}[htbp]
   \centering
   \small
@@ -1288,7 +1302,7 @@ La quantificazione algebrica del principio di autosufficienza mediante l'operato
   \label{fig:precipizio_sezione2}
 \end{figure}
 
-\subsection{{Robustezza multilingue e stabilità parametrica (Risposta a \texorpdfstring{$\mathcal{D}_3$}{D3})}}
+\subsection{Robustezza multilingue e stabilità parametrica (Risposta a \texorpdfstring{$\mathcal{D}_3$}{D3})}
 \begin{enumerate}
     \item \textbf{Invarianza al modello NER}: rigenerando la matrice FCA e i cluster bivariati sostituendo le regole con le predizioni del modello Legal-BERT, tutti i 16 componenti sopra la soglia ed i 9 componenti risultano identici con identico supporto.
     \item \textbf{Stabilità Bootstrap}: sottoponendo il corpus a 30 ricampionamenti casuali al 90\%, i 16 cluster compaiono stabilmente in 28 run su 30, con indice di Jaccard medio $> 0,82$.
@@ -1296,8 +1310,45 @@ La quantificazione algebrica del principio di autosufficienza mediante l'operato
     \begin{itemize}
         \item Nelle versioni in lingua inglese (\num{1330} proposizioni) e francese (\num{1223} proposizioni), emergono 18 cluster sopra-soglia che coprono i 9 componenti (incluso C5 già a $k=10$);
         \item Variando $k \in [7, 14]$ su tutte le lingue, il componente C5 si isola come cluster autonomo in 21 configurazioni sulle 24 totali (emerge stabilmente per $k \in [8, 14]$ in italiano e per ogni $k \ge 7$ in EN e FR), provando così che C5 rappresenta una reale funzione architetturale e non un artefatto dovuto alla segmentazione.
+        \item L'omologia persistente calcolata sui testi in lingua inglese e francese (\cref{fig:tda_multilingue}) esibisce un profilo morfologico sovrapponibile a quello italiano (\cref{fig:tda_complessiva}): in entrambe le lingue la curva $\beta_0$ decade esponenzialmente incrociando $\beta_1$ alla medesima soglia critica ($\varepsilon \approx \num{0,058}$), mentre i cicli 1-dimensionali $\beta_1$ convergono su un plateau compreso tra i 150 e 170 cicli persistenti ($\varepsilon \approx \num{0,10}$) e le distribuzioni di persistenza $H_0$ preservano la stessa coda lunga fino a $\num{0,14}\text{--}\num{0,16}$. Ciò dimostra che la connettività reticolare dell'AI Act è un invariante strutturale della norma europea, indipendente dalla lingua di redazione.
     \end{itemize}
 \end{enumerate}
+%%
+%
+%Curve betti e persistenza en /fr
+%%
+\begin{figure}[htbp]
+  \centering
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figure/tda_betti_curve_en.png}
+    \caption{Curve di Betti $\beta_0, \beta_1$ -- Inglese (EN).}
+    \label{fig:tda_betti_en}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figure/tda_h0_persistence_en.png}
+    \caption{Persistenza $H_0$ -- Inglese (EN).}
+    \label{fig:tda_persistence_en}
+  \end{subfigure}
+  \vspace{0.35cm}
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figure/tda_betti_curve_fr.png}
+    \caption{Curve di Betti $\beta_0, \beta_1$ -- Francese (FR).}
+    \label{fig:tda_betti_fr}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.48\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{figure/tda_h0_persistence_fr.png}
+    \caption{Persistenza $H_0$ -- Francese (FR).}
+    \label{fig:tda_persistence_fr}
+  \end{subfigure}
+  \caption[Invarianza topologica multilingue dell'AI Act (EN e FR)]{Confronto topologico multilingue sui testi ufficiali in lingua inglese (a, b) e francese (c, d): l'andamento delle curve di Betti e delle distribuzioni di persistenza $H_0$ conferma l'invarianza transfrontaliera della struttura reticolare dell'AI Act rispetto al testo italiano (\cref{fig:tda_complessiva}).}
+  \label{fig:tda_multilingue}
+\end{figure}
 %%%%%%%%%%%%%
 %CAPITOLO 5
 %%%%%%%%%%%%%%%
@@ -1305,7 +1356,7 @@ La quantificazione algebrica del principio di autosufficienza mediante l'operato
 \label{cap:discussione}
 
 \section{interpretazione critica dei risultati}
-I dati sperimentali e i riscontri quantitativi esposti nel Capitolo 4 offrono una lente formale per comprendere la natura dell'AI Act. Al di là delle singole metriche algoritmiche, l'analisi congiunta della classificazione deontica, del Named Entity Recognition, della Topological Data Analysus (TDA) e della Format Concept Analysis(FCA) dischiude tre considerazioni fondamentali che legano la struttura matematica del testo alla progettazione di sistemi software.
+I dati sperimentali e i riscontri quantitativi esposti nel Capitolo 4 offrono una lente formale per comprendere la natura dell'AI Act. Al di là delle singole metriche algoritmiche, l'analisi congiunta della classificazione deontica, del Named Entity Recognition, della Topological Data Analysus (TDA) e della Formal Concept Analysis(FCA) dischiude tre considerazioni fondamentali che legano la struttura matematica del testo alla progettazione di sistemi software.
 \subsection{Asimmetria del linguaggio legislativo europeo e concezione dell'obbligo tecnico}
 Il primo riscontro concettuale scaturisce dall'appartenente debolezza del classificatore deterministico delle proposizioni normative. Come documentato dal Capitolo 4(4,2), il modulo a regole basato su verbi deontici canonici (dovere, essere tenuto a, garantisce) ottiene una precisione elevata (0,93), ma il richiamo crolla al 57\% sul campione indipendente, facendo scendere l'accuratezza complessiva al \textbf{67\%} e regalando il \textbf{72\% delle proposizioni normative alla classe residuale} \textbf{altro}.
 
@@ -1321,8 +1372,8 @@ Questo fenomeno non è imputabile ad un difetto lessicale del dizionario delle r
 Sul piano dell'Ingegneria dei Requisiti (Requirement Engineering), questa constatazione sancisce l'inadeguatezza degli approcci di estrazione basati unicamente su patter deontici tradizionali. Trattare una proposizione all'indicativo come priva di valore descrittivo significherebbe escludere dall'architettura di conformità oltre la metà dei requisiti tecnici dell'atto.
 È proprio questa evidenza linguistica ad ever imposto di assumere la presenza dell'attore (\textit{has\_attore = 1}) - o il suo recupero contestuale - come cardine della derivazione architetturale, superando il filtro sintattico dell'obbligo esplicito.
 
-Questa asimmetria trova la sua dimostrazione visiva nella distribuzione a precipizio '' precipizion '' rilevata nella Sezione~2 del Capo~III (\cref{fig:precipizio_sezione2}) e nella stratificazione dell'\emph{Iceberg Lattice} generato dalla Formal Concept Analysis (\cref{fig:fca_metodologia}).
-Come mostra la \cref{fig:precipizio_sezione2}, gli Articoli~9 (gestione dei rischi) e~10 (governance dei dati) concentrano da soli il \textbf{61,5\% di tutti i rinvii funzionali} dell'intero Capo~III, pur presentando un'assenza quasi totale di attori grammaticali espliciti (tra il 90\% e il 100\% di impersonalità, contro lo 0\% degli articoli Articoli~16--27) . Da questa evidenza empirica è possibile formulare una legge teorica per l'Ingegneria dei requisiti normativi (\textbf{Teoria dell'Oggetivazione dell'Obbligo Tecnico}): \emph{nella legislazione europea sulle tecnologie digitali, la densità architetturale di una disposizione è inversametne proporzionale alla presenza di verbi deontici e soggetti grammaticali espliciti}. Laddove la norma cessa di prescrivere condotte umane per definire invarianti di stato dell'artefatto software, un parser puramente sintattico diventa cieco; solo la regola formale diereditarietà dell'attore ($\mathcal{D_2}$, fondata sul rinvio dell'Articolo~16 lettera~$a$) permette di salvare dalla dispersione di 41 proposiziooni tecniche e di far emergere la reale portata del \textbf{Componente~C1}(\emph{Risk \& Data Governance Engine}, che sale da 60 a 101 proposizioni).
+Questa asimmetria trova la sua dimostrazione visiva nella distribuzione a ``precipizio'' rilevata nella Sezione~2 del Capo~III (\cref{fig:precipizio_sezione2}) e nella stratificazione dell'\emph{Iceberg Lattice} generato dalla Formal Concept Analysis (\cref{fig:fca_metodologia}).
+Come mostra la \cref{fig:precipizio_sezione2}, gli Articoli~9 (gestione dei rischi) e~10 (governance dei dati) concentrano da soli il \textbf{61,5\% di tutti i rinvii funzionali} dell'intero Capo~III, pur presentando un'assenza quasi totale di attori grammaticali espliciti (tra il 90\% e il 100\% di impersonalità, contro lo 0\% degli articoli Articoli~16--27) . Da questa evidenza empirica è possibile formulare una legge teorica per l'Ingegneria dei requisiti normativi (\textbf{Teoria dell'Oggettivazione dell'Obbligo Tecnico}): \emph{nella legislazione europea sulle tecnologie digitali, la densità architetturale di una disposizione è inversamente proporzionale alla presenza di verbi deontici e soggetti grammaticali espliciti}. Laddove la norma cessa di prescrivere condotte umane per definire invarianti di stato dell'artefatto software, un parser puramente sintattico diventa cieco; solo la regola formale di ereditarietà dell'attore ($\mathcal{D_2}$, fondata sul rinvio dell'Articolo~16 lettera~$a$) permette di salvare dalla dispersione di 41 proposizioni tecniche e di far emergere la reale portata del \textbf{Componente~C1}(\emph{Risk \& Data Governance Engine}, che sale da 60 a 101 proposizioni).
 
 
 
@@ -1404,17 +1455,17 @@ Oggi, l'adeguamento normativo a un quadro complesso come l'AI Act viene prevalen
 \end{enumerate}
 
 \subsection{I quattro principi architetutrali di AI-Compliance by Design}
-I quattro principi di progettazione software (\emph{AI-Compliance by Design} non costituiscono una riformulazione discorsiva del dettato nomrativo, ma rappresentano la \textbf{distillazione ingegneristica diretta} delle evidenze topologiche \cref{fig:tda_complessiva,fig:fca_metodologia}) e geometriche (\cref{fig:cluster_derivazione,fig:semantic_projection_2d,fig:precipizio_sezione2}) discusse nella Sezione~5.1. La \cref{tab:distillazione_principi} sintetizza la catena di derivazione che lega ciascun riscontro empirico del Capitolo~4 ai componenti del catalogo (C1--C9) e al corrispondente principio architetturale.
+I quattro principi di progettazione software (\emph{AI-Compliance by Design}) non costituiscono una riformulazione discorsiva del dettato normativo, ma rappresentano la \textbf{traduzione ingegneristica diretta} delle evidenze topologiche (\cref{fig:tda_complessiva,fig:fca_metodologia}) e geometriche (\cref{fig:cluster_derivazione,fig:semantic_projection_2d,fig:precipizio_sezione2}) discusse nella Sezione~5.1. La \cref{tab:distillazione_principi} sintetizza la catena di derivazione che lega ciascun riscontro sperimentale del Capitolo~4 ai componenti del catalogo (C1--C9) e al corrispondente principio architetturale.
 
 \begin{table}[htbp]
 \centering
-\caption{Matrice di distillazione dei quattro principi di design dai finding empirici e dai componenti architetturali.}
+\caption{Matrice di derivazione dei quattro principi architetturali dalle evidenze sperimentali e dai componenti software.}
 \label{tab:distillazione_principi}
 \footnotesize
 \renewcommand{\arraystretch}{1.25}
 \begin{tabularx}{\textwidth}{>{\bfseries}p{2.8cm} X p{2.5cm} p{3.2cm}}
 \toprule
-\textbf{Principio di Design} & \textbf{Finding empirico e Figura di origine (Cap.~4)} & \textbf{Componenti distillati} & \textbf{Pattern architetturale risultante} \\
+\textbf{Principio di Design} & \textbf{Finding empirico e Figura di origine (Cap.~4)} & \textbf{Componenti associati} & \textbf{Pattern architetturale risultante} \\
 \midrule
 P1. Auditability \& Logging by Design & 100\% impersonalità Art.~12 (\cref{fig:precipizio_sezione2}) e $\beta_1 = 151$ cicli tra logging, rischio e documentazione (\cref{fig:tda_complessiva}) & \textbf{C3} (Tech Doc), \textbf{C4} (Logging \& Monitoring) & Telemetria immutabile \emph{Append-Only} / WORM ($\ge 6$ mesi) \\
 \addlinespace[2pt]
@@ -1502,7 +1553,7 @@ La validità esterna misura la possibilità di generalizzare la metodologia e le
 \end{itemize}
     \item \textbf{Invarianza linguistica transfrontaliera:}
     \begin{itemize}
-        \item \texttt{Valutazione}: l'esperimento multilingue condotto sui testi ufficiali in lingua inglese e francese (Capitolo 4, Sezione 4.4) ha confermato che l'architettura dei cluster e i componenti software primari rimangono stabili (18 cluster sopra soglia in EN e FR, con emersione spontanea del componente C5). Ciò attesta che le strutture estratte non sono artefatti idiosicratici della lingua italiana, ma riflettono l'ontologia concettuale autentica concepita dal legislatore europeo. 
+        \item \textbf{Valutazione:} l'esperimento multilingue condotto sui testi ufficiali in lingua inglese e francese (Capitolo~4, \cref{fig:tda_multilingue}) ha confermato che sia il profilo omologico delle curve di Betti ($\beta_0, \beta_1$) sia l'architettura dei cluster e dei componenti software primari rimangono stabili (18 cluster sopra soglia in EN e FR, con emersione spontanea del componente C5). Ciò attesta che le strutture estratte non sono artefatti idiosincratici della lingua italiana, ma riflettono l'ontologia concettuale autentica concepita dal legislatore europeo.
     \end{itemize}
     
 \end{enumerate}

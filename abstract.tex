@@ -1,0 +1,37 @@
+% =============================================================================
+% SOMMARIO / ABSTRACT (da includere in tesi.tex prima di \tableofcontents)
+% Esempio d'uso in tesi.tex:
+%   \input{abstract}
+% =============================================================================
+
+\chapter*{Sommario}
+\addcontentsline{toc}{chapter}{Sommario}
+
+L'entrata in vigore del Regolamento (UE) 2024/1689 (\emph{AI Act}) introduce un quadro normativo articolato che impone vincoli tecnici, organizzativi e documentali lungo l'intero ciclo di vita dei sistemi di intelligenza artificiale. Tradurre un testo legislativo complesso in requisiti ingegneristici e architetture software tracciabili rappresenta una sfida aperta al confine tra \emph{Legal Engineering} e ingegneria del software.
+
+La presente tesi affronta tale problema attraverso una pipeline computazionale \emph{end-to-end}, riproducibile e strutturata secondo il processo CRISP-DM, applicata al testo consolidato dell'AI Act in italiano (e replicata sulle versioni inglese e francese per verificarne la stabilità multilingue). Il regolamento viene segmentato in \num{1775} proposizioni atomiche, di cui \num{1172} a rilevanza normativa diretta (\num{1171} impiegate nelle matrici numeriche), arricchite con classificazione deontica e del livello di rischio, estrazione di entità giuridiche (\texttt{ATTORE}, \texttt{AUTORITA}, \texttt{RIF\_NORMATIVO}) e coordinate strutturali.
+
+Sul piano metodologico, il lavoro indaga tre domande di ricerca. In primo luogo ($\mathcal{D}_1$), confronta l'efficacia di un approccio simbolico basato su regole sintattiche e gazetteer (\emph{Rules v2}) rispetto a un modello neurale di dominio (\emph{Italian-Legal-BERT}) addestrato tramite supervisione debole (\emph{silver labels}). Attraverso un protocollo sperimentale a quattro round ciechi e il test appaiato di McNemar, viene dimostrata la sostanziale parità statistica tra i due paradigmi ($F_1 = \num{0,954}$ contro $\num{0,953}$ sul campione \emph{pooled}, $p = \num{0,727}$; $F_1 = \num{0,921}$ contro $\num{0,916}$ sul quarto round cieco, $p = \num{1,000}$). L'esperimento controllato in \emph{5-fold Cross-Validation} evidenzia inoltre il cosiddetto ``paradosso maestro--allievo'': addestrato esclusivamente sulle annotazioni manuali, il modello neurale scende a $F_1 = \num{0,821}$, confermando che in un corpus normativo a vocabolario chiuso la supervisione debole non consente alla rete di superare il proprio supervisore deterministico.
+
+In secondo luogo ($\mathcal{D}_2$ e $\mathcal{D}_3$), l'integrazione sinergica di \emph{Non-negative Matrix Factorization} ($k=10$, NNDSVDa), \emph{Topological Data Analysis} (filtrazione di Vietoris-Rips, che rileva una componente connessa dominante al \SI{93,1}{\percent} già a $\epsilon = \num{0,0897}$ e \num{151} cicli persistenti $\beta_1$ a $\epsilon = \num{0,1053}$) e \emph{Formal Concept Analysis} (reticolo \emph{Iceberg} di \num{91} concetti formali e \num{177} relazioni di sussunzione) rivela la struttura modulare della norma e il ruolo cardine dell'attributo \texttt{has\_attore}. L'analisi isola inoltre l'impersonalità sintattica della Sezione~2 del Capo~III (Artt.~8--15), risolta mediante una regola formale di eredità contestuale basata sull'Articolo~16 che recupera \num{54} proposizioni orfane con una precisione del \SI{96,3}{\percent}.
+
+Infine, l'aggregazione di \num{16} cluster bivariati ($\text{Attore} \times \text{Topic}$) conduce alla definizione di un catalogo tracciabile di \textbf{9 componenti software} per la conformità (C1--C9) distribuiti lungo il ciclo di vita del sistema di IA e alla formalizzazione di quattro principi architetturali di \emph{AI-Compliance by Design}: \emph{Continuous Logging}, \emph{Structural Human-in-the-Loop}, \emph{Data Hygiene} e \emph{Regulatory Telemetry}.
+
+\clearpage
+
+\selectlanguage{english}
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+Regulation (EU) 2024/1689 (\emph{AI Act}) establishes a comprehensive legal framework introducing technical, organizational, and documentation requirements across the entire lifecycle of artificial intelligence systems. Translating dense statutory text into verifiable engineering requirements and traceable software architectures remains an open challenge at the intersection of Legal Engineering and Software Engineering.
+
+This thesis addresses this gap through a reproducible, end-to-end computational pipeline structured according to the CRISP-DM methodology and applied to the consolidated Italian text of the AI Act (with multilingual cross-checks on the English and French editions). The regulation is deterministically segmented into \num{1775} atomic propositions---\num{1172} carrying direct normative relevance (\num{1171} used in numerical modeling matrices)---annotated with deontic modality, risk level, legal named entities (\texttt{ATTORE}, \texttt{AUTORITA}, \texttt{RIF\_NORMATIVO}), and structural coordinates.
+
+First ($\mathcal{D}_1$), the study compares a symbolic rule-based and gazetteer system (\emph{Rules v2}) against a domain-adapted neural language model (\emph{Italian-Legal-BERT}) trained under weak supervision (\emph{silver labels}). Evaluated across four blind validation rounds, McNemar's paired test confirms statistical parity between the two approaches ($F_1 = 0.954$ vs.\ $0.953$ on the pooled benchmark, $p = 0.727$; $F_1 = 0.921$ vs.\ $0.916$ on the blind Round~4, $p = 1.000$). A controlled 5-fold cross-validation experiment further exposes the ``teacher--student paradox'': when trained solely on manual annotations, the neural model drops to $F_1 = 0.821$, proving that weak supervision prevents the student model from outperforming its deterministic teacher on a closed-vocabulary statutory corpus.
+
+Second ($\mathcal{D}_2$, $\mathcal{D}_3$), the combined application of Non-negative Matrix Factorization ($k=10$, NNDSVDa), Topological Data Analysis (Vietoris-Rips filtration, revealing a giant connected component covering $93.1\%$ of propositions at $\epsilon = 0.0897$ and $151$ persistent $\beta_1$ cycles at $\epsilon = 0.1053$), and Formal Concept Analysis (an Iceberg Lattice of $91$ formal concepts and $177$ subsumption edges) uncovers the latent modular structure of the Act and the pivotal role of legal actors (\texttt{has\_attore}). To overcome the syntactic impersonality of Chapter~III, Section~2 (Articles~8--15), a formal inheritance rule grounded in Article~16 recovers $54$ orphan technical requirements with $96.3\%$ precision.
+
+Finally, aggregating $16$ stable bivariate clusters ($\text{Actor} \times \text{Topic}$) yields a traceable catalog of \textbf{9 compliance software components} (C1--C9) mapped onto the AI system lifecycle and four guiding \emph{AI-Compliance by Design} architectural principles: \emph{Continuous Logging}, \emph{Structural Human-in-the-Loop}, \emph{Data Hygiene}, and \emph{Regulatory Telemetry}.
+
+\selectlanguage{italian}
+\clearpage

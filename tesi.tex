@@ -11,6 +11,8 @@
 \usepackage[a4paper,top=3cm,bottom=3cm,inner=3.5cm,outer=2.5cm]{geometry}
 \usepackage{setspace}
 \onehalfspacing
+\usepackage{microtype}
+\usepackage{xurl}
 
 % --- 3. Matematica, numeri e unità di misura ----------------------------------
 \usepackage{amsmath}
@@ -132,10 +134,10 @@
 \section{Contesto e motivazione}
 \label{sec:contesto}
 
-Il Regolamento (UE) 2024/1689 \cite{aiact2024}, noto anche come AI Act, rappresenta il primo quadro normativo orizzontale al mondo per la regolamentazione dell'intelligenza artificiale. La portata del testo è monumentale: esteso su oltre 144 pagine della Gazzetta Ufficiale dell'Unione Europea, il regolamento si articola in 180 considerando(le premesse introduttive che chiariscono obiettivi e interpretazione della norma), 113 articoli e 13 allegati tecnici. Il legislatore comunitario ha adottato un approccio basato sul rischio (\textit{risk-based approach}), introducendo una classificazione piramidale (\cref{fig:piramide_rischio}) che va dal rischio inaccettabile (pratiche vietate con decorrenza a 6 mesi dall'entrata in vigore), ai sistemi di IA per finalità generali (GPAI, con obblighi a 12 mesi), fino ai sistemi ad alto rischio, per i quali è prevista la piena efficacia tra i 24 e i 36 mesi.
+Il Regolamento (UE) 2024/1689 \cite{aiact2024}, noto anche come AI Act, rappresenta il primo quadro normativo orizzontale al mondo per la regolamentazione dell'intelligenza artificiale. La portata del testo è monumentale: esteso su oltre 144 pagine della Gazzetta Ufficiale dell'Unione Europea, il regolamento si articola in 180 considerando (le premesse introduttive che chiariscono obiettivi e interpretazione della norma), 113 articoli e 13 allegati tecnici. Il legislatore comunitario ha adottato un approccio basato sul rischio (\textit{risk-based approach}), introducendo una classificazione piramidale (\cref{fig:piramide_rischio}) che va dal rischio inaccettabile (pratiche vietate con decorrenza a 6 mesi dall'entrata in vigore), ai sistemi di IA per finalità generali (GPAI, con obblighi a 12 mesi), fino ai sistemi ad alto rischio, per i quali è prevista la piena efficacia tra i 24 e i 36 mesi.
 
-Le ripercussini operative e i rischi di non conformità sono senza precedenti per il settore tecnologico:
-l'Art.~99 definisce infatti le sanzioni amministrative pecuniare modulandole in base alla gravità della violazione. Le penali possono raggiungere i 35 milioni di euro a fino al 7\% del fatturato globale mondiale annuo per la violazione dielle pratice vietate Art.~5 (quali impiego di software di riconoscimento delle emozioni sul lavoro o lo scraping biomertico non mirato di volti), e fino a 15 milioni di euro o al 3\% del fatturato per l'inadempimento degli obblichi relativi ai sistemi ad alto rischio e alla trasparenza. In tale ambito, la sanzione non scatta solo per un errore algoritmico, ma per l'assenza di requisiti architetturali obbligatori nel software, quali la mancata registrazione continua dei log (Art.~12), l'inadeguatezza dei meccanismi di override umano (Art.~14) o l'assenza di controlli di data governance per prevenire bias discriminatori in sistemi di screening dei CV o di credit scoring (Art.~10)
+Le ripercussioni operative e i rischi di non conformità sono senza precedenti per il settore tecnologico:
+l'Art.~99 definisce infatti le sanzioni amministrative pecuniarie modulandole in base alla gravità della violazione. Le penali possono raggiungere i 35 milioni di euro a fino al 7\% del fatturato globale mondiale annuo per la violazione delle pratice vietate Art.~5 (quali impiego di software di riconoscimento delle emozioni sul lavoro o lo scraping biometrico non mirato di volti), e fino a 15 milioni di euro o al 3\% del fatturato per l'inadempimento degli obblighi relativi ai sistemi ad alto rischio e alla trasparenza. In tale ambito, la sanzione non scatta solo per un errore algoritmico, ma per l'assenza di requisiti architetturali obbligatori nel software, quali la mancata registrazione continua dei log (Art.~12), l'inadeguatezza dei meccanismi di override umano (Art.~14) o l'assenza di controlli di data governance per prevenire bias discriminatori in sistemi di screening dei CV o di credit scoring (Art.~10).
 
 Gli obblighi previsti non ricadono su un unico soggetto generico, ma sono meticolosamente distribuiti su una pluralità di figure lungo l'intera catena del valore (fornitori, \textit{deployer}, importatori, distributori, rappresentanti autorizzati, organismi notificati e autorità di vigilanza) e si estendono lungo tutto il ciclo di vita del sistema, dalla progettazione al monitoraggio post-immissione sul mercato. Ciascun ruolo è gravato da vincoli operativi specifici:
 \begin{itemize}
@@ -312,7 +314,7 @@ Tutti i moduli vengono valutati su campioni annotati manualmente: ogni stima è 
 Le tecniche impiegate nella tesi si fondano su letterature consolidate. Il lavoro ne propone un impiego congiunto sul medesimo testo normativo, articolando il contributo su due piani:
 
 \begin{itemize}
-    \item \textbf{Pipeline e dataset}. La realizzazione di una pipeline \emph{end-to-end} riproducibile che trasforma il testo grezzo dell'AI Act in un dataset strutturato di proposizioni normative (1.775 totali, di cui 1.172 prescrittive in italiano, replicato sulle versioni inglese e francese), arricchito con coordinate strutturali, tipo di obbligo, livello di rischio, entità astratte(attori), autorità, rinvii), profilo tematico NMF, contesto formale binario e campioni \emph{gold} annotati manualmente alla cieca.
+    \item \textbf{Pipeline e dataset}. La realizzazione di una pipeline \emph{end-to-end} riproducibile che trasforma il testo grezzo dell'AI Act in un dataset strutturato di proposizioni normative (1.775 totali, di cui 1.172 prescrittive in italiano, replicato sulle versioni inglese e francese), arricchito con coordinate strutturali, tipo di obbligo, livello di rischio, entità astratte (attori), autorità, rinvii), profilo tematico NMF, contesto formale binario e campioni \emph{gold} annotati manualmente alla cieca.
     
     \item \textbf{Metodologia}. Il risultato principale riguarda il confronto tra regex e modello neurale. Il modello, addestrato sulle etichette prodotte dalle regex (\textit{silver labels}), ne eredita gli errori sistematici: il suo vantaggio iniziale dipendeva da bug delle regole e, una volta corretti, i due sistemi convergono alla parità statistica ($0{,}921$ contro $0{,}916$ sul round cieco, $p = 1{,}00$, e $0{,}954$ contro $0{,}953$ pooled). Un modello addestrato solo su supervisione debole non può superare il proprio supervisore simbolico.
     La tesi documenta inoltre i rischi metodologici della valutazione: il classificatore del tipo di obbligo raggiunge il $67{,}6\%$ di accuratezza ($89{,}2\%$ sul rischio) su un campione di test indipendente; per il NER, la separazione netta tra annotatore e predizioni ha eliminato i bias di ancoraggio.
@@ -854,6 +856,7 @@ Gli articoli 1--112 sono rimasti rigorosamente immutati in tutte e tre le lingue
     \caption[Statistiche del corpus prima e dopo la bonifica]{Statistiche del corpus normativo italiano prima e dopo la bonifica dell'Articolo 113 e degli allegati.}
     \label{tab:statistiche_corpus}
     \renewcommand{\arraystretch}{1.3}
+    \resizebox{\linewidth}{!}{
     \begin{tabular}{l c c}
         \toprule
         \textbf{Livello del dato} & \textbf{Prima della bonifica} & \textbf{Corpus consolidato} \\
@@ -864,6 +867,7 @@ Gli articoli 1--112 sono rimasti rigorosamente immutati in tutte e tre le lingue
         --- di cui negli allegati tecnici & \emph{(annidati in art.~113)} & \textbf{145} \\
         \bottomrule
     \end{tabular}
+    }
 \end{table}
 
 \subsection{Segmentazione interna e scelta della granularità}
@@ -1060,7 +1064,10 @@ La fase conclusiva della pipeline formalizza il passaggio dal piano descrittivo 
 \subsection{Criterio di clustering bivariato \texorpdfstring{Attore $\times$ Topic (Risposta a $\mathcal{D}_3$)}{Attore x Topic (Risposta a D3)}}
 La combinazione tra gli attori regolati e i 10 macro-topic NMF produce una griglia di co-occorrenza. Per ogni coppia $(a, t)$, il supporto normativo è definito come:
 \begin{equation}
-    \text{Supporto}(a, t) = |\{g \in G \mid g \in \text{Attore}(a) \land g \in \text{Topic}(t) \land \texttt{tipo\_obbligo}(g) \ne \text{<<definizione>>}\}|
+\begin{aligned}
+    \text{Supporto}(a, t) = \big|\{g \in G \mid\ & g \in \text{Attore}(a) \land g \in \text{Topic}(t) \\
+    & \land \texttt{tipo\_obbligo}(g) \ne \text{<<definizione>>}\}\big|
+\end{aligned}
 \end{equation}
 Fissata una soglia minima di robustezza $\text{Supporto} \ge 8$ proposizioni, si isolano i \textbf{cluster canonici sopra soglia}, garantendo che ciascun raggruppamento poggi su una base probatoria consistente.
 
@@ -1084,7 +1091,7 @@ La Figura~\ref{fig:catalogo_ciclo_vita_metodologia} riassume l'intero raccordo m
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[width=1.1\textwidth]{figure/catalogo_ciclo_vita_metodologia.png}
+  \includegraphics[width=1.0\textwidth]{figure/catalogo_ciclo_vita_metodologia.png}
   \caption[Derivazione metodologica e architettura sul ciclo di vita dei 9 componenti]{Dalla modellazione semantica all'architettura di conformità: (a) integrazione tra clustering bivariato ($\mathcal{D}_3$) e regola di eredità strutturale sulla Sezione~2 ($\mathcal{D}_2$); (b) collocazione dei 9 componenti software (C1--C9) lungo le quattro fasi del ciclo di vita del sistema di IA.}
   \label{fig:catalogo_ciclo_vita_metodologia}
 \end{figure}
@@ -1166,6 +1173,7 @@ Il riconoscimento delle entità giuridiche (\campo{ATTORE}, \campo{AUTORITA}, \c
   \small
   \caption[Metriche comparative definitive dei sistemi NER e Test di McNemar]{Metriche comparative definitive strict dei sistemi NER e test di significatività appaiato di McNemar (Risposta a $\mathcal{D}_1$).}
   \label{tab:ner_mcnemar}
+  \resizebox{\textwidth}{!}{
   \begin{tabular}{llrrrcc}
     \toprule
     \textbf{Campione di test} & \textbf{Sistema NER} & \textbf{Prec.} & \textbf{Rec.} & \textbf{F1} & \textbf{Discordanze} & \textbf{p-value (McNemar)} \\
@@ -1179,6 +1187,7 @@ Il riconoscimento delle entità giuridiche (\campo{ATTORE}, \campo{AUTORITA}, \c
     & spaCy generalista & \num{0,238} & \num{0,211} & \num{0,223} & --- & --- \\
     \bottomrule
   \end{tabular}
+  }
 \end{table}
 
 Il test non parametrico di McNemar certifica la \textbf{perfetta parità statistica} ($p=\num{0,727}$ sul pooled, $p=\num{1,000}$ al Round 4 cieco). Per verificare se tale equivalenza derivasse unicamente dall'addestramento su silver labels, è stato condotto un esperimento controllato con \textbf{5-fold Cross-Validation} addestrando Legal-BERT esclusivamente su 309 proposizioni annotate a mano (591 entità gold; \cref{tab:bert_controllo}): da solo, LegalBERT crolla a $F_1 = \num{0,821}$ ($p<\num{0,001}$), mentre con pre-addestramento debole sulle regole risale a \num{0,940} allineandosi alla baseline simbolica (\num{0,946}).
@@ -1188,7 +1197,7 @@ Il test non parametrico di McNemar certifica la \textbf{perfetta parità statist
   \small
   \caption[Confronto 5-fold Cross-Validation tra regimi di supervisione]{Confronto su 5-fold Cross-Validation tra regimi di supervisione forte e debole per Legal-BERT.}
   \label{tab:bert_controllo}
-  \begin{tabular}{p{5.5cm} c c p{4.2cm}}
+  \begin{tabular}{p{4.8cm} c c p{3.6cm}}
     \toprule
     \textbf{Configurazione sperimentale} & \textbf{Round 4 F1} & \textbf{5-fold CV F1} & \textbf{Esito metodologico} \\
     \midrule
@@ -1199,7 +1208,6 @@ Il test non parametrico di McNemar certifica la \textbf{perfetta parità statist
     \bottomrule
   \end{tabular}
 \end{table}
-
 
 %____________
 
@@ -1408,7 +1416,7 @@ La quantificazione algebrica del principio di autosufficienza mediante l'operato
 \label{cap:discussione}
 
 \section{Interpretazione critica dei risultati}
-I dati sperimentali e i riscontri quantitativi esposti nel Capitolo 4 offrono una lente formale per comprendere la natura dell'AI Act. Al di là delle singole metriche algoritmiche, l'analisi congiunta della classificazione deontica, del Named Entity Recognition, della Topological Data Analysus (TDA) e della Formal Concept Analysis(FCA) dischiude tre considerazioni fondamentali che legano la struttura matematica del testo alla progettazione di sistemi software.
+I dati sperimentali e i riscontri quantitativi esposti nel Capitolo 4 offrono una lente formale per comprendere la natura dell'AI Act. Al di là delle singole metriche algoritmiche, l'analisi congiunta della classificazione deontica, del Named Entity Recognition, della Topological Data Analysus (TDA) e della Formal Concept Analysis (FCA) dischiude tre considerazioni fondamentali che legano la struttura matematica del testo alla progettazione di sistemi software.
 \subsection{Asimmetria del linguaggio legislativo europeo e concezione dell'obbligo tecnico}
 Il primo riscontro concettuale scaturisce dall'appartenente debolezza del classificatore deterministico delle proposizioni normative. Come documentato dal Capitolo 4(4,2), il modulo a regole basato su verbi deontici canonici (dovere, essere tenuto a, garantisce) ottiene una precisione elevata (0,93), ma il richiamo crolla al 57\% sul campione indipendente, facendo scendere l'accuratezza complessiva al \textbf{67\%} e regalando il \textbf{72\% delle proposizioni normative alla classe residuale} \textbf{altro}.
 
@@ -1536,13 +1544,13 @@ P4. Disaccoppiamento Fornitore/Deployer & Biforcazione nel reticolo FCA su \text
     \begin{itemize}
         \item Fondamento empirico : deriva direttamente dall'anomalia del 100\% di assenza di attore nell'Articolo~12 (\cref{fig:precipizio_sezione2}) e dalla presenza dei 151 cicli topologici (\cref{fig:tda_complessiva}), che legano i componenti \textbf{C3} e \textbf{C4} alla verifica di tutti gli altri requisiti;
         \item Vincolo architetturale: i meccanismi di logging per sistemi ad alto rischio non devono limitarsi a catturare eccezioni o tracciati di errore applicativo (\emph{application telemetry}), ma devono registrare in modo continuativo, automatico e deterministico l'intero flusso operativo: gli input forniti dal deployer, l'output generato dall'algoritmo, la versione esatta dei pesi e del software in esecuzione, e l'identificativo degli operatori umani coinvolti nella catena decisionale;
-        \item Prescrizione tecnica: l'architettura deve garantire l'integrità e l'immutabilità dei registri(mediante pattern \emph{Appens-Only}, firme digitali crittografiche o partizioni storage \emph{Write-Once-Read-Many }-- WORM, assicurando per progettazione un periodo di ritenzione e conservazione minima di \textbf{almeno sei mesi} (Articolo 26, comma 6) senza possibilità di alterazione retroattiva.
+        \item Prescrizione tecnica: l'architettura deve garantire l'integrità e l'immutabilità dei registri (mediante pattern \emph{Appens-Only}, firme digitali crittografiche o partizioni storage \emph{Write-Once-Read-Many }-- WORM, assicurando per progettazione un periodo di ritenzione e conservazione minima di \textbf{almeno sei mesi} (Articolo 26, comma 6) senza possibilità di alterazione retroattiva.
     \end{itemize}
-    \item \textbf{Principio 2: Structural Human-in-the-Loop(Art. 14)}
+    \item \textbf{Principio 2: Structural Human-in-the-Loop (Art. 14)}
     La sorveglianza umana (\emph{human oversight}) non può ridursi a una dashboard di notifica passiva o a una spunta contrattuale disattesa nella pratica.
 
     \begin{itemize}
-        \item Fondamento empirico : scaturisce dalla netta separazione degometrica del \textbf{Componente~C7} nella tassellazione di Voronoi (\cref{fig:cluster_voronoi}) e nella proiezione PCA (\cref{fig:semantic_projection_2d}), dove i requisiti di trasparenza e supervisione formano un polo autonomo al confine tra fornitore e utilizzatore;
+        \item Fondamento empirico : scaturisce dalla netta separazione geometrica del \textbf{Componente~C7} nella tassellazione di Voronoi (\cref{fig:cluster_voronoi}) e nella proiezione PCA (\cref{fig:semantic_projection_2d}), dove i requisiti di trasparenza e supervisione formano un polo autonomo al confine tra fornitore e utilizzatore;
         \item Vincolo architetturale: le capacità di supervisione umana devoe costituire un blocco funzionale attivo e integrante del flusso di controllo dsel software (\emph{control-flow}). Il sistema deve essere architetturalmente programmato per impedire il completamento di un'operazione ad alto rischio in assenza di convalida umana (\emph{two-man rule} o approvazione esplicita), ogniqualcolta il modello operi con livelli di confidenza statistica inferiori a soglie prefissate o rilevi anomalie distribuzionali nei dati;
         \item Prescizione tecnica; il software deve esporre interfacce native di arresto immediato (\emph{kill-switch}) e meccanismi di sovrascrittura (\emph{manual override}), progettati per consentire all'operatore di interrompere l'esecuzione in qualsiasi istante e far collassare il sistema in uno stato sicuro, prevedibile e reversibile(\emph{fail-safe state}), azzerando gli effetti operativi delle inferenze errate.
     \end{itemize}
@@ -1551,7 +1559,7 @@ P4. Disaccoppiamento Fornitore/Deployer & Biforcazione nel reticolo FCA su \text
     La correttezza e la qualità dei dati di addestramento non possono essere considerate come un collaudo statico certificato una volta per tutte prima del rilascio
     \begin{itemize}
         \item Fondamento empirico: è impostato dal ''precipizio'' delle dipendenze funzionali (\cref{fig:precipizio_sezione2}), che vede convergere sugli Articoli~9 e~10 il 61,5\% dei legami dell'intero Capo~III, condensati nel \textbf{Componente~C1} grazie alla regola di ereditarietà $\mathcal{D}_2$ (da 60 a 101 proposizioni);
-        \item Vincolo architetturale: come imposto dai requisiti della Sezione 2, l'architettura software deve integrare una pipeline continua di \emph{data governance} attiva lungo l'intero ciclo di vita(dalla raccolta dei dati grazzi al deployement e re-training continuo);
+        \item Vincolo architetturale: come imposto dai requisiti della Sezione 2, l'architettura software deve integrare una pipeline continua di \emph{data governance} attiva lungo l'intero ciclo di vita (dalla raccolta dei dati grazzi al deployement e re-training continuo);
         \item Prescrizione tecnica: la pipeline MLOps devono includere moduli automatici di validazione statistica per verificare sistematicamente la rappresentatività, l'adeguatezza e l'assenza di distorsioni statistiche (bias), rispetto a categorie demografiche o protette. Il sistema deve monitorare a runtime la deriva distributiva dei dati in ingrresso (\emph{data drift}) e la deriva concettuale delle predizioni (\emph{concept drift}), innescando allarmi architetturali e bloccando l'erogazione dei servizi qualora i dati d'esercizio divergano dalle assunzioni di validazione originarie.
     \end{itemize}
 
@@ -1601,7 +1609,7 @@ La validità esterna misura la possibilità di generalizzare la metodologia e le
     \item \textbf{Generalizzabilità ad altri quadri normativi dell'Unione Europea:}
     \begin{itemize}
     \item \texttt{Valutazione:} la pipeline metodologica (segmentazione proposizionale, classificazione deontica, NER simbolico/neurale, TDA e reticoli FCA) è stata concepita per sfruttare lo stile redazionale codificato della Gazzetta Ufficiale dell'Unione Europea. Di conseguenza, l'approccio è teoricamente esportabile ad altri grandi regolamenti digitali comunitari, quali il \textbf{GDPR (Reg. UE \num{2016}/679)}, il \textbf{Data Act (Reg. UE \num{2023}/2854)}, la \textbf{Direttiva NIS2 (Dir. UE \num{2022}/2555)} e il \textbf{Cyber Resilience Act}.
-    \item \texttt{Limiti di trasferibilità:} ciascun testo presenta specificità strutturali. Mentre l'AI Act è caratterizzato da una massiccia concentrazione di requisiti tecnici impersonali (Sezione 2), il GDPR presenta una struttura basata su soggetti giuridici più chiaramente esplicitati (titolare del trattamento, responsabile, interessato). Il trasferimento ad altri atti richiederà pertanto la ricalibrazione del dizionario delle entità e l'adattamento delle regole di eredità sintattica.
+    \item \texttt{Limiti di trasferibilità:} ciascun testo presenta specificità strutturali. Mentre l'AI Act è caratterizzato da una massiccia concentrazione di requisiti tecnici impersonali (Sezione 2), il GDPR presenta una struttura basata su soggetti giuridici più chiaramente esplicitati (titolare del trattamento, responsabile, interessato). Il trasferimento ad altri atti richiederà pertanto la ricalibrazione del dizionario delle entità e l'adattamento delle regole di eredita sintattica.
 \end{itemize}
     \item \textbf{Invarianza linguistica transfrontaliera:}
     \begin{itemize}
@@ -1634,7 +1642,7 @@ I risultati e i contributi conseguiti nel presente lavoro si articolano su tre d
     \begin{itemize}
         \item Progettazione e formalizzazione di una pipeline computazionale end-to-end, riproducibile e strutturate secondo le fasi del modello di processo industriale CRISP-DM;
         \item Dimostrazione empirica dell'importanza di adottare protocolli di validazione rigorosamente ciechi e a regole congelate (test su campioni indipendenti e a 4 round sequenziali per il NER), documentando come procedure semi-automatiche e non indipendenti inducano un forte bias di ancoraggio cognitivo e stime ingannevoli di accuratezza;
-        \item Chiarimento sperimentale del rapporto tra sistemi simbolici e modelli linguistici di dominio (Italian-Legal-BERT): dimostrazione che  in un singolo atto legislativo a vocabolario chiuso le regole sintattiche ben calibrate eguagliano le reti neurali (p=0,727, parità statistica confermata dal test di McNemar), e identificazione del limite intrinseco della weak supervision ("paradosso maestro-allievo"), in cui la rete neurale replica ed eredità le imperfezioni del generatore euristico.
+        \item Chiarimento sperimentale del rapporto tra sistemi simbolici e modelli linguistici di dominio (Italian-Legal-BERT): dimostrazione che  in un singolo atto legislativo a vocabolario chiuso le regole sintattiche ben calibrate eguagliano le reti neurali (p=0,727, parità statistica confermata dal test di McNemar), e identificazione del limite intrinseco della weak supervision ("paradosso maestro-allievo"), in cui la rete neurale replica ed eredita le imperfezioni del generatore euristico.
     \end{itemize}
     \item \textbf{Contributo analitico ed empirico sull'AI Act}:
     \begin{itemize}
@@ -1655,7 +1663,7 @@ I risultati e i contributi conseguiti nel presente lavoro si articolano su tre d
 Nel rispetto del rigore scientifico, si dichiarano i limiti intrinseci al perimetro del presente lavoro:
 \begin{itemize}
     \item \textbf{Annotazione a singolo operatore}: i campioni di controllo e di validazione (\textit{gold standard}) sono stati annotati manualmente. Sebbene l'adozione di un protocollo a round ciechi sequenziali abbia neutralizzato il bias di conferma, non è stato possibile calcolare un coefficiente di accordo inter-annotazione formale (Cohen's Kappa) con esperti giuridici indipendenti;
-    \item \textbf{Risoluzione parziale dei rinvii normativi esterni}: il modulo di Named Entity Recognition raggiunge un richiamo del 81\% sui riferimenti normativi; una frazione delle citazioni complesse verso normative comunitarie esterne (quali i regolamenti sui dispositivi medici o la legislazione di armonizzazione tecnica) rimane non completamente disambiguata a livello di singolo comma;
+    \item \textbf{Risoluzione parziale dei rinvii normativi esterni}: il modulo di Named Entity Recognition raggiunge un richiamo dell' 81\% sui riferimenti normativi; una frazione delle citazioni complesse verso normative comunitarie esterne (quali i regolamenti sui dispositivi medici o la legislazione di armonizzazione tecnica) rimane non completamente disambiguata a livello di singolo comma;
     \item \textbf{Perimetro limitato alle specifiche architetturali}: il lavoro definisce rigorosamente i requisiti funzionali, le matrici di tracciabilità e i vincoli architetturali dei 9 componenti software , ma non include l'implementazione del codice sorgente di un prototipo software funzionante a microservizi.
 \end{itemize}
 
@@ -1663,7 +1671,7 @@ Nel rispetto del rigore scientifico, si dichiarano i limiti intrinseci al perime
 \subsection{Sviluppi futuri}
 La metodologia e gli strumenti sviluppati aprono diverse direttrici di estensione:
 \begin{enumerate}
-    \item \textbf{Costruzione di un Knowledge Graph multiregolamentare}: estendere la pipeline di parsing ed estrazione concettuale agli altri quadri normativi della Unione Europea per il digitale (GDPR, Data Act, Direttiva NIS2, Cyber Resilience Act), risolvendo le dipendenze e i rinvii incrociati per costruire un grafo della conoscenza integrato della compliance digitale europea;
+    \item \textbf{Costruzione di un Knowledge Graph multiregolamentare}: estendere la pipeline di parsing ed estrazione concettuale agli altri quadri normativi dell' Unione Europea per il digitale (GDPR, Data Act, Direttiva NIS2, Cyber Resilience Act), risolvendo le dipendenze e i rinvii incrociati per costruire un grafo della conoscenza integrato della compliance digitale europea;
     \item \textbf{Supporto all'ingegneria dei requisiti tramite LLM}: valutare l'impiego controllato di modelli linguistici generativi dotati di capacità di ragionamento (\textit{reasoning models}) per assistere l'ingegnere del software nella generazione automatica di scenari di test di conformità architetturale a partire dai vincoli estratti;
     \item \textbf{Prototipazione modulare e sperimentazione in Sandbox regolamentari}: tradurre le specifiche dei 9 componenti software in una suite di servizi applicativi modulari (quali motori di audit logging crittografico conformi all'Art. 12 o interfacce di integrazione per la banca dati UE ex Art.71), valutandone l'operatività all'interno delle sperimentazioni controllate (regulatory sandboxes) previste dalle autorità nazionali competenti
 \end{enumerate}
